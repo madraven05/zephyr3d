@@ -1,0 +1,8 @@
+{
+  "name": "react",
+  "version": "1.0.0",
+  "description": "Will include all the react 3D components",
+  "main": "index.ts",
+  "author": "Pranshu Kumar Gond",
+  "license": "MIT"
+}
