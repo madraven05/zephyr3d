@@ -4,20 +4,17 @@ import React from "react";
 const Navbar = () => {
   const navbarItems = [
     {
-      title: "Getting Started",
-      link: "/getting-started",
+      title: "Dev",
+      link: "/dev",
     },
-    {
-      title: "Docs",
-      link: "/docs",
-    },
+
     {
       title: "Components",
-      link: "/components",
+      link: "/docs/components",
     },
   ];
   return (
-    <nav className="flex gap-10 px-10 py-5 text-white font-heading uppercase">
+    <nav className="flex justify-center items-center gap-10 text-white font-heading uppercase">
         {navbarItems.map(item => (
             <Link href={item.link} className="hover:font-bold hover:-translate-y-1 hover:cursor-pointer transition duration-300 ease-in-out">{item.title}</Link>
         ))}
