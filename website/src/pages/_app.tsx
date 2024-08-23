@@ -1,8 +1,16 @@
-import '../styles/global.css';
-import type { AppProps } from 'next/app';
+import Navbar from "@/components/navbar";
+import "../styles/global.css";
+import type { AppProps } from "next/app";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  return (
+    <>
+      <header className="fixed top-0 right-0">
+        <Navbar></Navbar>
+      </header>
+      <Component {...pageProps} />;
+    </>
+  );
 }
 
 export default MyApp;
