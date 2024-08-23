@@ -3,9 +3,15 @@
   "private": true,
   "workspaces": [
     "packages/*",
-    "/website"
+    "website"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "@react-spring/three": "^9.7.4",
+    "@react-three/fiber": "^8.17.5",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.41",
+    "tailwindcss": "^3.4.10"
+  },
   "devDependencies": {
     "lerna": "^8.1.8"
   }
