@@ -1,4 +1,5 @@
 import Image from "next/image";
+import {ProductCard} from '@zephyr3D/react';
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
         dolores nulla asperiores excepturi. Repudiandae reiciendis rem
         doloremque voluptatum vero?
       </p>
+      <ProductCard></ProductCard>
     </main>
   );
 }
