@@ -8,10 +8,10 @@ function MyApp({ Component, pageProps, router }: AppProps) {
   const isHomePage = router.pathname === "/";
   return (
     <>
-      <header className="flex z-30 items-center justify-between w-screen py-3 px-10 fixed top-0 right-0">
+      <header className="flex shadow-lg backdrop-blur-lg bg-slate-500/10 z-30 items-center justify-between w-full py-3 px-7 fixed top-0">
         <div>
           <Link href="/">
-            <h2>Zephyr3D</h2>
+            <h1>Zephyr3D</h1>
           </Link>
         </div>
         <Navbar />
