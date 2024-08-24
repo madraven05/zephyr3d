@@ -9,7 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mdx-js/loader": "^3.0.1",
+    "@mdx-js/react": "^3.0.1",
+    "@next/mdx": "^14.2.6",
+    "fs": "^0.0.1-security",
+    "gray-matter": "^4.0.3",
     "next": "14.2.6",
+    "next-mdx-remote": "^5.0.0",
+    "path": "^0.12.7",
     "react": "^18",
     "react-dom": "^18"
   },
