@@ -6,6 +6,7 @@
 
 body {
   @apply bg-slate-400;
+  @apply dark:bg-slate-800;
   @apply text-white;
 }
 

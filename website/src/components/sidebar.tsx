@@ -92,7 +92,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
   };
 
   return (
-    <aside className="sm:hidden lg:block hidden fixed w-72 h-screen overflow-auto py-8 px-7 bg-slate-800/10 shadow-lg rounded-md text-white font-heading uppercase">
+    <aside className="sm:hidden lg:block hidden fixed w-72 h-screen overflow-auto py-8 px-7 bg-slate-800/10 dark:bg-slate-700/10 shadow-lg rounded-md text-white font-heading uppercase">
       {/* side nav */}
       <ul className="flex flex-col gap-3">
         {sidebarNavItems[pageName as string].map((item) => (
