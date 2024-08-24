@@ -21,7 +21,12 @@ interface SidebarProps {}
 
 const Sidebar: React.FC<SidebarProps> = () => {
   const router = useRouter();
-  const pageName = router.pathname.split("/").filter(Boolean).pop();
+  var pageName = '';
+  if(router.pathname.includes("components")) {
+    pageName = 'components';
+  } else {
+    pageName = 'dev';
+  }
 
   const sidebarNavItems: SidebarNavItems = {
     components: [
@@ -30,7 +35,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
         navItems: [
           {
             title: "Product Card",
-            link: "/docs/components/",
+            link: "/docs/components/product-card",
           },
           {
             title: "Particled Mesh",

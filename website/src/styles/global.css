@@ -5,7 +5,8 @@
 @tailwind utilities;
 
 body {
-    @apply bg-slate-400
+  @apply bg-slate-400;
+  @apply text-white;
 }
 
 h1,
