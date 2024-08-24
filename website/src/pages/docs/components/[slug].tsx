@@ -1,10 +1,12 @@
 import React from "react";
 import fs from "fs";
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
+import { MDXProvider } from '@mdx-js/react';
 import { GetStaticPaths, GetStaticProps } from "next";
 import matter from "gray-matter";
 import path from "path";
-import { serialize } from 'next-mdx-remote/serialize';
+import { serialize } from "next-mdx-remote/serialize";
+import { ProductCard } from "@zephyr3D/react";
 
 interface ComponentDocProps {
   source: MDXRemoteSerializeResult;
@@ -17,12 +19,18 @@ interface ComponentDocProps {
   };
 }
 
+const components = {
+    ProductCard
+}
+
 const ComponentDoc = ({ source, frontMatter }: ComponentDocProps) => {
   return (
     <div className="flex flex-col gap-5">
       <h1>{frontMatter.title}</h1>
       <p>{frontMatter.description}</p>
-      <MDXRemote {...source}/>
+      <MDXProvider components={components}>
+        <MDXRemote {...source} />
+      </MDXProvider>
     </div>
   );
 };

@@ -1,8 +1,11 @@
+import { ProductCard } from '@zephyr3D/react'
 import React from 'react'
 
 const ComponentsPage = () => {
   return (
-    <div>ComponentsPage</div>
+    <div>
+        <ProductCard/>
+    </div>
   )
 }
 
