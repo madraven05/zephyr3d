@@ -11,7 +11,7 @@ export const ProductCardPanel: React.FC<ProductCardPanelProps> = ({
 }) => {
   return (
     <div
-      className={`flex flex-col gap-3 rounded-lg shadow-lg p-5 ${className}`}
+      className={`flex flex-col gap-3 rounded-b-lg shadow-lg p-5 ${className}`}
       {...restProps}
     >
       {children}

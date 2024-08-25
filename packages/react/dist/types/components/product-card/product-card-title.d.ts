@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactNode } from 'react';
+import React, { HTMLAttributes, ReactNode } from "react";
 export interface ProductCardTitleProps extends HTMLAttributes<HTMLHeadingElement> {
     children: ReactNode;
 }
