@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import fs from "fs";
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
+import { MDXProvider } from "@mdx-js/react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import matter from "gray-matter";
 import path from "path";
-import { serialize } from 'next-mdx-remote/serialize';
+import { serialize } from "next-mdx-remote/serialize";
+import {
+  ProductCard,
+  ProductCardTitle,
+  ProductCardPanel,
+  ProductCardCanvas
+} from "@zephyr3D/react";
+import Prism from "prismjs";
+import CodeBlock from "@/components/code-block";
+import { NikeAirJordan } from "@/components/NikeAirJordan";
 
 interface ComponentDocProps {
   source: MDXRemoteSerializeResult;
@@ -17,12 +27,27 @@ interface ComponentDocProps {
   };
 }
 
+const components = {
+  ProductCard,
+  ProductCardTitle,
+  ProductCardPanel,
+  ProductCardCanvas,
+  NikeAirJordan
+};
+
 const ComponentDoc = ({ source, frontMatter }: ComponentDocProps) => {
+  useEffect(() => {
+    Prism.highlightAll();
+  }, []);
+
   return (
     <div className="flex flex-col gap-5">
       <h1>{frontMatter.title}</h1>
-      <p>{frontMatter.description}</p>
-      <MDXRemote {...source}/>
+      <p>{frontMatter.description}</p> 
+
+      <MDXProvider components={components}>
+        <MDXRemote {...source} />
+      </MDXProvider>
     </div>
   );
 };

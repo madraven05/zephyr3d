@@ -4,6 +4,7 @@ import type { AppProps } from "next/app";
 import SidebarLayout from "@/components/sidebar-layout";
 import Link from "next/link";
 
+
 function MyApp({ Component, pageProps, router }: AppProps) {
   const isHomePage = router.pathname === "/";
   return (
