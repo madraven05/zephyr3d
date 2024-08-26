@@ -10,7 +10,7 @@ import {
   ProductCard,
   ProductCardTitle,
   ProductCardPanel,
-  ProductCardCanvas
+  ProductCardCanvas,
 } from "@zephyr3D/react";
 import Prism from "prismjs";
 import CodeBlock from "@/components/code-block";

@@ -4,6 +4,7 @@ import {
   ProductCardPanel,
   ProductCardTitle,
   ProductCardCanvas,
+  ParticlesWave
 } from "@zephyr3D/react";
 import React from "react";
 
@@ -25,6 +26,7 @@ const ComponentsPage = () => {
           <p className="font-semibold">$400</p>
         </ProductCardPanel>
       </ProductCard>
+      <ParticlesWave orbitControls className="bg-white/5 h-96"/>
     </div>
   );
 };
