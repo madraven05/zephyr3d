@@ -1,9 +1,10 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import React, { useMemo, useRef } from "react";
 import { OrbitControls } from "@react-three/drei";
-import { MeshStandardMaterial, MeshToonMaterial, Object3D, SphereGeometry, } from "three";
-import { circularMotionXZ, sineWaveXZ } from "../../utils/particle-wave-helper";
-export const ParticlesWaveModel = ({ particlesCount = 500, particleColor = "#32e7e7", xLength = 14, yLength = 14, zLength = 4, duration = 1000, material = new MeshStandardMaterial({ color: particleColor }), waveFunction = sineWaveXZ, }) => {
+import { Color, MeshStandardMaterial, Object3D, SphereGeometry, } from "three";
+import { sineWaveXZ } from "../../utils/particle-wave-helper";
+import { lerp } from "three/src/math/MathUtils";
+export const ParticlesWaveModel = ({ particlesCount = 500, particleColor = "#32e7e7", xLength = 14, yLength = 14, zLength = 4, duration = 1000, material = new MeshStandardMaterial({ color: particleColor }), startColor = "#7439e2", endColor = "#ce9082", waveFunction = sineWaveXZ, }) => {
     const meshRef = useRef(null);
     const dummy = useMemo(() => new Object3D(), []);
     //   const material = new MeshStandardMaterial({ color: particleColor });
@@ -17,6 +18,22 @@ export const ParticlesWaveModel = ({ particlesCount = 500, particleColor = "#32e
             ]);
         }
         return particlesArray;
+    }, [particlesCount, xLength, yLength, zLength]);
+    const colors = useMemo(() => {
+        const colorsArray = new Float32Array(particlesCount * 3);
+        const colA = new Color(startColor);
+        const colB = new Color(endColor);
+        for (let i = 0; i < particlesCount; i++) {
+            const r = lerp(colA.r, colB.r, (i + 1) / particlesCount);
+            const g = lerp(colA.g, colB.g, (i + 1) / particlesCount);
+            const b = lerp(colA.b, colB.b, (i + 1) / particlesCount);
+            //   const color = new Color(r,g,b);
+            //   console.log(color)
+            colorsArray[i * 3] = r;
+            colorsArray[i * 3 + 1] = g;
+            colorsArray[i * 3 + 2] = b;
+        }
+        return colorsArray;
     }, [particlesCount]);
     useFrame(() => {
         particles.forEach((particle, i) => {
@@ -27,16 +44,13 @@ export const ParticlesWaveModel = ({ particlesCount = 500, particleColor = "#32e
         });
         meshRef.current.instanceMatrix.needsUpdate = true;
     });
-    return (React.createElement("instancedMesh", { ref: meshRef, args: [new SphereGeometry(0.02, 4, 4), material, particlesCount] }));
+    return (React.createElement("instancedMesh", { ref: meshRef, args: [new SphereGeometry(0.02, 4, 4), material, particlesCount] },
+        React.createElement("instancedBufferAttribute", { attach: "instanceColor", itemSize: 3, array: colors, count: particlesCount })));
 };
 export const ParticlesWave = ({ orbitControls = false, children, ...props }) => {
-    const material = new MeshToonMaterial({ color: "#e3c6e5" });
     return (React.createElement("div", { ...props },
         React.createElement(Canvas, null,
-            React.createElement("ambientLight", null),
-            React.createElement("directionalLight", { position: [10, 10, 10] }),
-            React.createElement(ParticlesWaveModel, { particleColor: "#e3c6e5", particlesCount: 1000, material: material, xLength: 24, zLength: 4, yLength: 20, waveFunction: circularMotionXZ }),
-            orbitControls ? React.createElement(OrbitControls, null) : null,
-            children)));
+            children,
+            orbitControls ? React.createElement(OrbitControls, null) : null)));
 };
 //#endregion

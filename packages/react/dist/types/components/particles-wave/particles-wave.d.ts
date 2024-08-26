@@ -9,6 +9,8 @@ export interface ParticlesWaveModelProps {
     waveFunction?: (particle: number[], duration: number) => [number, number, number];
     duration?: number;
     material?: Material;
+    startColor?: string;
+    endColor?: string;
 }
 export declare const ParticlesWaveModel: React.FC<ParticlesWaveModelProps>;
 export interface ParticlesWaveProps extends HTMLAttributes<HTMLDivElement> {

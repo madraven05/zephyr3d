@@ -9,7 +9,6 @@ import {
 import React from "react";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 
-
 const ComponentsPage = () => {
   return (
     <div>
@@ -28,15 +27,6 @@ const ComponentsPage = () => {
           <p className="font-semibold">$400</p>
         </ProductCardPanel>
       </ProductCard>
-      <ParticlesWave orbitControls className="bg-white/5 h-96">
-        <EffectComposer>
-          <Bloom
-            luminanceThreshold={0.2} // Controls which parts of the scene should glow
-            luminanceSmoothing={0.5} // Smoothing between bright and dark areas
-            intensity={1} // Controls the intensity of the bloom effect
-          />
-        </EffectComposer>
-      </ParticlesWave>
     </div>
   );
 };

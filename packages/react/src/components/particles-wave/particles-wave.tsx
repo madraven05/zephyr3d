@@ -3,15 +3,15 @@ import React, { HTMLAttributes, ReactNode, useMemo, useRef } from "react";
 import { OrbitControls } from "@react-three/drei";
 
 import {
+  Color,
   InstancedMesh,
   Material,
-  MeshPhongMaterial,
   MeshStandardMaterial,
-  MeshToonMaterial,
   Object3D,
   SphereGeometry,
 } from "three";
-import { circularMotionXZ, circularMotionYZ, sineWaveXZ } from "../../utils/particle-wave-helper";
+import { sineWaveXZ } from "../../utils/particle-wave-helper";
+import { lerp } from "three/src/math/MathUtils";
 
 //#region model
 export interface ParticlesWaveModelProps {
@@ -26,6 +26,8 @@ export interface ParticlesWaveModelProps {
   ) => [number, number, number];
   duration?: number;
   material?: Material;
+  startColor?: string;
+  endColor?: string;
 }
 
 export const ParticlesWaveModel: React.FC<ParticlesWaveModelProps> = ({
@@ -36,6 +38,8 @@ export const ParticlesWaveModel: React.FC<ParticlesWaveModelProps> = ({
   zLength = 4,
   duration = 1000,
   material = new MeshStandardMaterial({ color: particleColor }),
+  startColor = "#7439e2",
+  endColor = "#ce9082",
   waveFunction = sineWaveXZ,
 }) => {
   const meshRef = useRef<InstancedMesh>(null);
@@ -47,12 +51,31 @@ export const ParticlesWaveModel: React.FC<ParticlesWaveModelProps> = ({
     const particlesArray = [];
     for (let i = 0; i < particlesCount; i++) {
       particlesArray.push([
-        Math.random() * xLength - xLength/2,
-        Math.random() * yLength - yLength/2,
-        Math.random() * zLength - zLength/2,
+        Math.random() * xLength - xLength / 2,
+        Math.random() * yLength - yLength / 2,
+        Math.random() * zLength - zLength / 2,
       ]);
     }
     return particlesArray;
+  }, [particlesCount, xLength, yLength, zLength]);
+
+  const colors = useMemo(() => {
+    const colorsArray = new Float32Array(particlesCount * 3);
+    const colA = new Color(startColor);
+    const colB = new Color(endColor);
+
+    for (let i = 0; i < particlesCount; i++) {
+      const r = lerp(colA.r, colB.r, (i + 1) / particlesCount);
+      const g = lerp(colA.g, colB.g, (i + 1) / particlesCount);
+      const b = lerp(colA.b, colB.b, (i + 1) / particlesCount);
+
+      //   const color = new Color(r,g,b);
+      //   console.log(color)
+      colorsArray[i * 3] = r;
+      colorsArray[i * 3 + 1] = g;
+      colorsArray[i * 3 + 2] = b;
+    }
+    return colorsArray;
   }, [particlesCount]);
 
   useFrame(() => {
@@ -69,7 +92,14 @@ export const ParticlesWaveModel: React.FC<ParticlesWaveModelProps> = ({
     <instancedMesh
       ref={meshRef}
       args={[new SphereGeometry(0.02, 4, 4), material, particlesCount]}
-    />
+    >
+      <instancedBufferAttribute
+        attach="instanceColor"
+        itemSize={3}
+        array={colors}
+        count={particlesCount}
+      />
+    </instancedMesh>
   );
 };
 //#endregion
@@ -85,24 +115,11 @@ export const ParticlesWave: React.FC<ParticlesWaveProps> = ({
   children,
   ...props
 }) => {
-  const material = new MeshToonMaterial({ color: "#e3c6e5" });
-
   return (
     <div {...props}>
       <Canvas>
-        <ambientLight />
-        <directionalLight position={[10, 10, 10]} />
-        <ParticlesWaveModel
-          particleColor="#e3c6e5"
-          particlesCount={1000}
-          material={material}
-          xLength={24}
-          zLength={4}
-          yLength={20}
-          waveFunction={circularMotionXZ}
-        />
-        {orbitControls ? <OrbitControls /> : null}
         {children}
+        {orbitControls ? <OrbitControls /> : null}
       </Canvas>
     </div>
   );
