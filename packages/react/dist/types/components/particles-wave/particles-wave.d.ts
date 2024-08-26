@@ -2,7 +2,6 @@ import React, { HTMLAttributes, ReactNode } from "react";
 import { Material } from "three";
 export interface ParticlesWaveModelProps {
     particlesCount?: number;
-    particleColor?: string;
     xLength?: number;
     yLength?: number;
     zLength?: number;

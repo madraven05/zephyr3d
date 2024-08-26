@@ -2,6 +2,7 @@ import {
   ParticlesWave,
   ParticlesWaveModel,
   circularMotionXZ,
+  sineWaveXZ
 } from "@zephyr3D/react";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { MeshPhongMaterial } from "three";
@@ -13,6 +14,10 @@ const Hero = () => {
 
   const zephyrContext = useContext(ZephyrContext);
 
+  const customWaveFunction = (x:number,y:number,z:number,time: number): [number, number,number] => {
+    return [x,y,z]
+  }
+
   return (
     <section className="flex w-full flex-grow flex-col justify-center items-center">
       <ParticlesWave className=" w-full h-screen">
@@ -20,12 +25,13 @@ const Hero = () => {
         <pointLight position={[10, 10, 10]} intensity={2} />
         <directionalLight position={[0, 0, 10]} intensity={1.5} />
         <ParticlesWaveModel
-          //   particleColor="#e3c6e5"
           particlesCount={5000}
           material={material}
           xLength={24}
           zLength={2}
           yLength={4}
+          startColor="#c08ff4"
+          endColor="#efa26b"
           waveFunction={circularMotionXZ}
         />
         {zephyrContext?.isDarkModeEnabled ? (
@@ -40,7 +46,7 @@ const Hero = () => {
         ) : null}
       </ParticlesWave>
       <div className="absolute p-10 text-center flex flex-col justify-center items-center">
-        <h1 className="font-extrabold text-white/80 text-5xl">Zephyr3D</h1>
+        <h1 className="font-extrabold text-5xl">Zephyr3D</h1>
         <p className="">
           A 3D component library made using React Three Fiber, Tailwind and
           React Spring

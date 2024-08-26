@@ -41,26 +41,14 @@ const Sidebar: React.FC<SidebarProps> = () => {
             title: "Product Card",
             link: "/docs/components/product-card",
           },
-          {
-            title: "Particled Mesh",
-            link: "/docs/components/",
-          },
-          {
-            title: "Particled Mesh",
-            link: "/docs/components/",
-          },
         ],
       },
       {
-        category: "Feedback",
+        category: "Visual Components",
         navItems: [
           {
-            title: "Product Card",
-            link: "/docs/components/",
-          },
-          {
-            title: "Particled Mesh",
-            link: "/docs/components/",
+            title: "Particle Wave",
+            link: "/docs/components/particle-wave",
           },
           {
             title: "Particled Mesh",
@@ -127,11 +115,11 @@ const Sidebar: React.FC<SidebarProps> = () => {
         as="div"
         open={openMobileSidebar}
         onClose={() => setOpenMobileSidebar(false)}
-        className="flex lg:hidden fixed left-0 top-10"
+        className="flex flex-grow lg:hidden fixed left-0 top-10"
       >
         <DialogPanel
           transition
-          className="z-30 bg-slate-600/20 p-10 font-heading uppercase backdrop-blur-lg h-screen w-96 -mx-5 my-10 shadow-lg rounded-xl transition duration-200 ease-in-out [--anchor-gap:var(--spacing-5)] data-[closed]:-translate-x-full"
+          className="z-30 bg-slate-600/20 p-10 font-heading uppercase backdrop-blur-lg h-screen w-full -mx-5 my-10 shadow-lg rounded-xl transition duration-200 ease-in-out [--anchor-gap:var(--spacing-5)] data-[closed]:-translate-x-full"
         >
           <button
             onClick={() => setOpenMobileSidebar(false)}

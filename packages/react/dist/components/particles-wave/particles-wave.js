@@ -4,7 +4,7 @@ import { OrbitControls } from "@react-three/drei";
 import { Color, MeshStandardMaterial, Object3D, SphereGeometry, } from "three";
 import { sineWaveXZ } from "../../utils/particle-wave-helper";
 import { lerp } from "three/src/math/MathUtils";
-export const ParticlesWaveModel = ({ particlesCount = 500, particleColor = "#32e7e7", xLength = 14, yLength = 14, zLength = 4, duration = 1000, material = new MeshStandardMaterial({ color: particleColor }), startColor = "#7439e2", endColor = "#ce9082", waveFunction = sineWaveXZ, }) => {
+export const ParticlesWaveModel = ({ particlesCount = 1000, xLength = 14, yLength = 14, zLength = 4, duration = 1000, startColor = "#fff", endColor = "#fff", material = new MeshStandardMaterial({ color: startColor }), waveFunction = sineWaveXZ, }) => {
     const meshRef = useRef(null);
     const dummy = useMemo(() => new Object3D(), []);
     //   const material = new MeshStandardMaterial({ color: particleColor });

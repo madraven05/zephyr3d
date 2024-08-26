@@ -6,11 +6,13 @@
  * @returns a new `[number, number,number]` that provides the new position of a given particle in the wave
  */
 export const sineWaveXZ = (
-  particle: number[],
+  x:number,
+  y:number,
+  z:number,
   duration: number
 ): [number, number, number] => {
   const time = performance.now() / duration;
-  return [particle[0], Math.sin(particle[0] + particle[2] + time), particle[2]];
+  return [x, Math.sin(x + y + time), z];
 };
 
 /**
@@ -21,12 +23,13 @@ export const sineWaveXZ = (
  * @returns a new `[number, number,number]` that provides the new position of a given particle in the wave
  */
 export const circularMotionYZ = (
-  particle: number[],
+  x:number,
+  y:number,
+  z:number,
   duration: number
 ): [number, number, number] => {
   const radius = 2;
   const time = performance.now() / duration;
-  const [x, y, z] = particle;
   return [radius * Math.cos(time + x), y, radius * Math.sin(time + z)];
 };
 
@@ -38,11 +41,12 @@ export const circularMotionYZ = (
  * @returns a new `[number, number,number]` that provides the new position of a given particle in the wave
  */
 export const circularMotionXZ = (
-    particle: number[],
+    x:number,
+    y:number,
+    z:number,
     duration: number
   ): [number, number, number] => {
     const radius = 2;
     const time = performance.now() / duration;
-    const [x, y, z] = particle;
     return [x, radius * Math.cos(time + y), radius * Math.sin(time + z)];
   };

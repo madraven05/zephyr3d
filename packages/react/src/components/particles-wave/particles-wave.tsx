@@ -16,7 +16,6 @@ import { lerp } from "three/src/math/MathUtils";
 //#region model
 export interface ParticlesWaveModelProps {
   particlesCount?: number;
-  particleColor?: string;
   xLength?: number;
   yLength?: number;
   zLength?: number;
@@ -31,15 +30,14 @@ export interface ParticlesWaveModelProps {
 }
 
 export const ParticlesWaveModel: React.FC<ParticlesWaveModelProps> = ({
-  particlesCount = 500,
-  particleColor = "#32e7e7",
+  particlesCount = 1000,
   xLength = 14,
   yLength = 14,
   zLength = 4,
   duration = 1000,
-  material = new MeshStandardMaterial({ color: particleColor }),
-  startColor = "#7439e2",
-  endColor = "#ce9082",
+  startColor = "#fff",
+  endColor = "#fff",
+  material = new MeshStandardMaterial({ color: startColor }),
   waveFunction = sineWaveXZ,
 }) => {
   const meshRef = useRef<InstancedMesh>(null);

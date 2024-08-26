@@ -17,6 +17,9 @@ const config: Config = {
       fontFamily: {
         "heading": ['Spinnaker', 'sans-serif'],
         "regular": ['Merriweather Sans', 'sans-serif']
+      },
+      borderWidth: {
+        1: "1px"
       }
     },
   },
