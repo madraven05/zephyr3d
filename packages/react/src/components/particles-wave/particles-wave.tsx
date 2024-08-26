@@ -20,7 +20,9 @@ export interface ParticlesWaveModelProps {
   yLength?: number;
   zLength?: number;
   waveFunction?: (
-    particle: number[],
+    x: number,
+    y: number,
+    z: number,
     duration: number
   ) => [number, number, number];
   duration?: number;
@@ -78,7 +80,8 @@ export const ParticlesWaveModel: React.FC<ParticlesWaveModelProps> = ({
 
   useFrame(() => {
     particles.forEach((particle, i) => {
-      const [newX, newY, newZ] = waveFunction(particle, duration);
+      const [x, y, z] = particle;
+      const [newX, newY, newZ] = waveFunction(x, y, z, duration);
       dummy.position.set(newX, newY, newZ);
       dummy.updateMatrix();
       meshRef.current!.setMatrixAt(i, dummy.matrix);

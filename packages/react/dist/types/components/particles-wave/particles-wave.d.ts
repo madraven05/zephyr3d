@@ -5,7 +5,7 @@ export interface ParticlesWaveModelProps {
     xLength?: number;
     yLength?: number;
     zLength?: number;
-    waveFunction?: (particle: number[], duration: number) => [number, number, number];
+    waveFunction?: (x: number, y: number, z: number, duration: number) => [number, number, number];
     duration?: number;
     material?: Material;
     startColor?: string;

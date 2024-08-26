@@ -7,8 +7,10 @@ import {
 import { NikeAirJordan } from "@/components/NikeAirJordan";
 import {
   CircularParticleWave,
+  CustomWaveFunction,
   SimpleParticleWave,
 } from "./code-examples/particle-wave-examples";
+import CodeBlock from "../code-block";
 
 export const mdxComponents = {
   ProductCard,
@@ -18,4 +20,6 @@ export const mdxComponents = {
   NikeAirJordan,
   SimpleParticleWave,
   CircularParticleWave,
+  CustomWaveFunction,
+  CodeBlock
 };

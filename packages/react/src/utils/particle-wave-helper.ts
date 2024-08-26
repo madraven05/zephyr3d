@@ -12,7 +12,7 @@ export const sineWaveXZ = (
   duration: number
 ): [number, number, number] => {
   const time = performance.now() / duration;
-  return [x, Math.sin(x + y + time), z];
+  return [x, Math.sin(x + z + time), z];
 };
 
 /**

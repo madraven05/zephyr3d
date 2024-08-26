@@ -18,30 +18,52 @@ import {
 ```
 
 ## Usage
-### Basic Usage
-Only the `startColor`, `endColor`, and the `particlesCount` props are used.
-<SimpleParticleWave/>
 
-```html
-<ParticlesWave>
-    <ambientLight intensity={1} />
-    <pointLight position={[10, 10, 10]} intensity={2} />
-    <directionalLight position={[0, 0, 10]} intensity={1.5} />
-    <ParticlesWaveModel startColor="#fff" endColor="#111" particlesCount={5000}/>
-</ParticlesWave>
-```
+### 1. Basic Usage
 
-### Using the wave Function props
 Only the `startColor`, `endColor`, and the `particlesCount` props are used.
-<CircularParticleWave/>
+
+<SimpleParticleWave />
 
 ```javascript
 import React from "react";
 import {
-    ParticlesWave,
-    ParticlesWaveModel,
-    circularMotionXZ,
-  } from "@zephyr3D/react";
+  ParticlesWave,
+  ParticlesWaveModel,
+  circularMotionXZ,
+} from "@zephyr3D/react";
+
+export const SimpleParticleWave = () => {
+  return (
+    <div className="bg-white/10 rounded-md">
+      <ParticlesWave>
+        <ambientLight intensity={1} />
+        <pointLight position={[10, 10, 10]} intensity={2} />
+        <directionalLight position={[0, 0, 10]} intensity={1.5} />
+        <ParticlesWaveModel
+          startColor="#fff"
+          endColor="#111"
+          particlesCount={5000}
+        />
+      </ParticlesWave>
+    </div>
+  );
+};
+```
+
+### 2. Using the wave Function props
+
+Only the `startColor`, `endColor`, and the `particlesCount` props are used.
+
+<CircularParticleWave />
+
+```javascript
+import React from "react";
+import {
+  ParticlesWave,
+  ParticlesWaveModel,
+  circularMotionXZ,
+} from "@zephyr3D/react";
 
 const CircularParticleWave = () => {
   return (
@@ -64,16 +86,46 @@ const CircularParticleWave = () => {
 export default CircularParticleWave;
 ```
 
-### Custom Wave Function
+### 3. Custom Wave Function
+
 Only the `startColor`, `endColor`, and the `particlesCount` props are used.
 
-```html
-<ParticlesWave>
+<CustomWaveFunction/>
+```javascript
+export const CustomWaveFunction = () => {
+  const customWave = (
+    x: number,
+    y: number,
+    z: number,
+    duration: number
+  ): [number, number, number] => {
+    const time = performance.now() / duration;
+    const amplitude = 1.5;
+    const frequency = 3;
+    const speed = 2;
+    const phase = 0;
+    const distance = Math.abs(x) + Math.abs(z);
+    const newY = amplitude * Math.sin(frequency * distance - speed * time + phase);
+    return [x, newY, z];
+};
+
+return (
+
+<div className="bg-white/10 rounded-md">
+  <ParticlesWave className="">
     <ambientLight intensity={1} />
     <pointLight position={[10, 10, 10]} intensity={2} />
     <directionalLight position={[0, 0, 10]} intensity={1.5} />
-    <ParticlesWaveModel startColor="#fff" endColor="#111" particlesCount={5000}/>
-</ParticlesWave>
+    <ParticlesWaveModel
+      startColor="#fff"
+      endColor="#111"
+      particlesCount={10000}
+      waveFunction={customWave}
+    />
+  </ParticlesWave>
+</div>
+); };
+
 ```
 
 ## Props
@@ -147,3 +199,4 @@ Only the `startColor`, `endColor`, and the `particlesCount` props are used.
     </tr>
   </tbody>
 </table>
+```

@@ -37,7 +37,8 @@ export const ParticlesWaveModel = ({ particlesCount = 1000, xLength = 14, yLengt
     }, [particlesCount]);
     useFrame(() => {
         particles.forEach((particle, i) => {
-            const [newX, newY, newZ] = waveFunction(particle, duration);
+            const [x, y, z] = particle;
+            const [newX, newY, newZ] = waveFunction(x, y, z, duration);
             dummy.position.set(newX, newY, newZ);
             dummy.updateMatrix();
             meshRef.current.setMatrixAt(i, dummy.matrix);
