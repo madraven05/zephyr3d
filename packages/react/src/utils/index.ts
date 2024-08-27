@@ -1,1 +1,1 @@
-export * from "./particle-wave-helper"
+export * from "./particles-wave-function"

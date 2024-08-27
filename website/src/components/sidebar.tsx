@@ -48,7 +48,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
         navItems: [
           {
             title: "Particle Wave",
-            link: "/docs/components/particle-wave",
+            link: "/docs/components/particles-wave",
           },
           {
             title: "Particled Mesh",

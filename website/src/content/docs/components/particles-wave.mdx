@@ -1,6 +1,6 @@
 ---
-id: "particle-wave"
-title: "Particle Wave"
+id: "particles-wave"
+title: "Particles Wave"
 category: "visual-display"
 package: "@zephyr3d/react"
 description: "A customisable animating wave goverened by mathematical expressions and some creativity!"
@@ -19,7 +19,7 @@ import {
 
 ## Usage
 
-### 1. Basic Usage
+### Basic Usage
 
 Only the `startColor`, `endColor`, and the `particlesCount` props are used.
 
@@ -51,9 +51,10 @@ export const SimpleParticleWave = () => {
 };
 ```
 
-### 2. Using the wave Function props
+### Using the wave Function props
 
-Only the `startColor`, `endColor`, and the `particlesCount` props are used.
+There are a bunch of tailor made wave functions that are available in Zephyr3D.
+One such is used here - `circularMotionXZ`. More functions can be found [here](https://www.google.com)
 
 <CircularParticleWave />
 
@@ -86,15 +87,16 @@ const CircularParticleWave = () => {
 export default CircularParticleWave;
 ```
 
-### 3. Custom Wave Function
+### Custom Wave Function
 
-Only the `startColor`, `endColor`, and the `particlesCount` props are used.
+Custom wave functions can be added as well. The function's arguments and return type should be consistent with the `waveFunction` prop's type (Mentioned in the props section).
+The custom wave function showcased in the example is a diamond sine wave.
 
 <CustomWaveFunction/>
 ```javascript
 export const CustomWaveFunction = () => {
   const customWave = (
-    x: number,
+    x: number,b
     y: number,
     z: number,
     duration: number
@@ -109,23 +111,22 @@ export const CustomWaveFunction = () => {
     return [x, newY, z];
 };
 
-return (
-
-<div className="bg-white/10 rounded-md">
-  <ParticlesWave className="">
-    <ambientLight intensity={1} />
-    <pointLight position={[10, 10, 10]} intensity={2} />
-    <directionalLight position={[0, 0, 10]} intensity={1.5} />
-    <ParticlesWaveModel
-      startColor="#fff"
-      endColor="#111"
-      particlesCount={10000}
-      waveFunction={customWave}
-    />
-  </ParticlesWave>
-</div>
-); };
-
+  return (
+    <div className="bg-white/10 rounded-md">
+      <ParticlesWave className="">
+          <ambientLight intensity={1} />
+          <pointLight position={[10, 10, 10]} intensity={2} />
+          <directionalLight position={[0, 0, 10]} intensity={1.5} />
+          <ParticlesWaveModel
+          startColor="#fff"
+          endColor="#111"
+          particlesCount={10000}
+          waveFunction={customWave}
+          />
+      </ParticlesWave>
+    </div>
+  ); 
+};
 ```
 
 ## Props
@@ -183,6 +184,12 @@ return (
       <td>"#ce9082"</td>
     </tr>
     <tr>
+      <td>`geometry`</td>
+      <td>Geometry defines the shape of the particle</td>
+      <td>`BufferGeometry`</td>
+      <td>`new SphereGeometry(0.02, 4, 4)`</td>
+    </tr>
+    <tr>
       <td>`material`</td>
       <td>Material of the particle in the wave</td>
       <td>`Material`</td>
@@ -199,4 +206,3 @@ return (
     </tr>
   </tbody>
 </table>
-```

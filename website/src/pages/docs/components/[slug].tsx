@@ -6,10 +6,9 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import matter from "gray-matter";
 import path from "path";
 import { serialize } from "next-mdx-remote/serialize";
-import { MeshPhongMaterial } from "three";
 import Prism from "prismjs";
-import CodeBlock from "@/components/code-block";
 import { mdxComponents } from "@/components/mdx-components/mdx-components";
+
 
 interface ComponentDocProps {
   source: MDXRemoteSerializeResult;
@@ -25,7 +24,7 @@ interface ComponentDocProps {
 const ComponentDoc = ({ source, frontMatter }: ComponentDocProps) => {
   useEffect(() => {
     Prism.highlightAll();
-  }, []);
+  });
 
   return (
     <div className="flex flex-col gap-5">

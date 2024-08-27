@@ -3,6 +3,7 @@ import React, { HTMLAttributes, ReactNode, useMemo, useRef } from "react";
 import { OrbitControls } from "@react-three/drei";
 
 import {
+    BufferGeometry,
   Color,
   InstancedMesh,
   Material,
@@ -10,7 +11,7 @@ import {
   Object3D,
   SphereGeometry,
 } from "three";
-import { sineWaveXZ } from "../../utils/particle-wave-helper";
+import { sineWave, WaveFunctionArgs } from "../../utils/particles-wave-function";
 import { lerp } from "three/src/math/MathUtils";
 
 //#region model
@@ -23,12 +24,14 @@ export interface ParticlesWaveModelProps {
     x: number,
     y: number,
     z: number,
-    duration: number
+    duration: number,
+    args?: WaveFunctionArgs
   ) => [number, number, number];
   duration?: number;
   material?: Material;
   startColor?: string;
   endColor?: string;
+  geometry?: BufferGeometry;
 }
 
 export const ParticlesWaveModel: React.FC<ParticlesWaveModelProps> = ({
@@ -40,7 +43,8 @@ export const ParticlesWaveModel: React.FC<ParticlesWaveModelProps> = ({
   startColor = "#fff",
   endColor = "#fff",
   material = new MeshStandardMaterial({ color: startColor }),
-  waveFunction = sineWaveXZ,
+  geometry = new SphereGeometry(0.02, 4, 4),
+  waveFunction = sineWave,
 }) => {
   const meshRef = useRef<InstancedMesh>(null);
   const dummy = useMemo(() => new Object3D(), []);
@@ -92,7 +96,7 @@ export const ParticlesWaveModel: React.FC<ParticlesWaveModelProps> = ({
   return (
     <instancedMesh
       ref={meshRef}
-      args={[new SphereGeometry(0.02, 4, 4), material, particlesCount]}
+      args={[geometry, material, particlesCount]}
     >
       <instancedBufferAttribute
         attach="instanceColor"
