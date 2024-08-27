@@ -11,7 +11,7 @@ import {
   Object3D,
   SphereGeometry,
 } from "three";
-import { sineWave, WaveFunctionArgs } from "../../utils/particles-wave-function";
+import { sineWave, WaveFunctionArgs } from "../../utils/particles-wave-functions";
 import { lerp } from "three/src/math/MathUtils";
 
 //#region model
