@@ -15,10 +15,6 @@ export default withMDX({
   options: {
     rehypePlugins: [
       rehypePrismPlus,
-      [
-        rehypeAddClasses,
-        { pre: "custom-code-block", code: "custom-code" },
-      ],
     ],
   },
 })(nextConfig);

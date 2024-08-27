@@ -4,8 +4,10 @@ import {
   ProductCardPanel,
   ProductCardTitle,
   ProductCardCanvas,
+  ParticlesWave,
 } from "@zephyr3D/react";
 import React from "react";
+import { EffectComposer, Bloom } from "@react-three/postprocessing";
 
 const ComponentsPage = () => {
   return (

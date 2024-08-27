@@ -1,12 +1,10 @@
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import {
-  Dialog,
-  DialogPanel,
-} from "@headlessui/react";
+import React, { useContext, useEffect, useState } from "react";
+import { Dialog, DialogPanel } from "@headlessui/react";
 import { MdClose } from "react-icons/md";
 import { FiMenu } from "react-icons/fi";
 import DarkModeToggleButton from "./dark-mode-toggle";
+import { ZephyrContext } from "./zephyr-context";
 
 const Navbar = () => {
   const navbarItems = [
@@ -23,12 +21,17 @@ const Navbar = () => {
 
   const [darkModeEnabled, setDarkModeEnabled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const zephyrContext = useContext(ZephyrContext);
+
 
   useEffect(() => {
     if (darkModeEnabled) {
       document.documentElement.classList.toggle("dark");
+      zephyrContext?.setIsDarkModeEnabled(true);
     } else {
       document.documentElement.classList.remove("dark");
+      zephyrContext?.setIsDarkModeEnabled(false);
+
     }
   }, [darkModeEnabled]);
 
