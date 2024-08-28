@@ -1,6 +1,6 @@
 import React, { HTMLAttributes, ReactNode } from "react";
 import { BufferGeometry, Material } from "three";
-import { WaveFunctionArgs } from "../../utils/particles-wave-function";
+import { WaveFunctionArgs } from "../../utils/particles-wave-functions";
 export interface ParticlesWaveModelProps {
     particlesCount?: number;
     xLength?: number;

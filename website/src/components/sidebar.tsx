@@ -41,6 +41,10 @@ const Sidebar: React.FC<SidebarProps> = () => {
             title: "Product Card",
             link: "/docs/components/product-card",
           },
+          {
+            title: "Earth 3D",
+            link: "/docs/components/earth-3d",
+          },
         ],
       },
       {

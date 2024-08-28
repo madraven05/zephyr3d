@@ -2,7 +2,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import React, { useMemo, useRef } from "react";
 import { OrbitControls } from "@react-three/drei";
 import { Color, MeshStandardMaterial, Object3D, SphereGeometry, } from "three";
-import { sineWave } from "../../utils/particles-wave-function";
+import { sineWave } from "../../utils/particles-wave-functions";
 import { lerp } from "three/src/math/MathUtils";
 export const ParticlesWaveModel = ({ particlesCount = 1000, xLength = 14, yLength = 14, zLength = 4, duration = 1000, startColor = "#fff", endColor = "#fff", material = new MeshStandardMaterial({ color: startColor }), geometry = new SphereGeometry(0.02, 4, 4), waveFunction = sineWave, }) => {
     const meshRef = useRef(null);

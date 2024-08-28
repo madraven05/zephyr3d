@@ -1,1 +1,1 @@
-export * from "./particles-wave-function";
+export * from "./particles-wave-functions";
