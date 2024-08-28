@@ -1,17 +1,31 @@
-import React from 'react'
-import {Earth3D, ParticlesWaveModel} from "@zephyr3D/react";
-import { Canvas } from '@react-three/fiber';
-import {OrbitControls} from "@react-three/drei"
-import { NikeAirJordan } from '@/components/NikeAirJordan';
-import { Earth3DModel } from './Earth3D';
+import React from "react";
+import { Earth3D, Earth3DGSON, ParticlesWaveModel } from "@zephyr3D/react";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
 
-const Earth3DExample = () => {
 
+export const Earth3DExample = () => {
   return (
-    <div className='bg-white/5 h-96'>
-       <Earth3D/>
+    <div className="bg-white/5 h-72 rounded-md">
+      <Canvas>
+        <ambientLight />
+        <directionalLight intensity={1} position={[2, -2, 2]} />
+        <Earth3D textureType={"base"} />
+        <OrbitControls />
+      </Canvas>
     </div>
-  )
-}
+  );
+};
 
-export default Earth3DExample
+export const Earth3DGSONExample = () => {
+  return (
+    <div className="bg-white/5 h-72 rounded-md">
+      <Canvas>
+        <ambientLight />
+        <directionalLight position={[2, -2, 2]} />
+        <Earth3DGSON gsonPath="/countries.geo.json"/>
+        <OrbitControls />
+      </Canvas>
+    </div>
+  );
+};

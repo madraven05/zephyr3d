@@ -98,7 +98,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
               <div>
                 {item.navItems.map((n) => (
                   <li className="mb-2">
-                    <Link href={n.link}>{n.title}</Link>
+                    <Link className="hover:-translate-y-1 hover:font-semibold transition duration-200 ease-in-out" href={n.link}>{n.title}</Link>
                   </li>
                 ))}
               </div>

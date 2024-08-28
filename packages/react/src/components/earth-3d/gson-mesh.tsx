@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import { BufferGeometry, PointsMaterial } from "three";
+import { Line } from "@react-three/drei";
 import { GeometryObject } from "geojson";
 import {
   convertCoordsTo3D,
@@ -7,14 +8,18 @@ import {
   createVertexForEachPoint,
 } from "../../utils/earth-3d-utils";
 
-export interface CountryMeshProps {
+export interface GSONMeshProps {
   geometry: GeometryObject;
   radius: number;
+  color?: string;
+  lineWidth?: number;
 }
 
-export const GSONMesh: React.FC<CountryMeshProps> = ({
+export const GSONMesh: React.FC<GSONMeshProps> = ({
   geometry,
   radius,
+  color = "white",
+  lineWidth = 1.2
 }) => {
   const countryGeom = useMemo(() => {
     const vertices: number[] = [];
@@ -54,10 +59,8 @@ export const GSONMesh: React.FC<CountryMeshProps> = ({
       createVertexForEachPoint(vertices)
     );
 
-    return geom;
+    return vertices;
   }, [geometry]);
 
-  const material = new PointsMaterial({ color: "white" });
-
-  return <lineSegments geometry={countryGeom} material={material} />;
+  return <Line points={countryGeom} color={color} lineWidth={lineWidth} />;
 };
