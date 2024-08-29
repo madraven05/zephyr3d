@@ -1,7 +1,13 @@
-import React, { useMemo } from "react";
-import { BufferGeometry, PointsMaterial } from "three";
-import { Line } from "@react-three/drei";
-import { GeometryObject, GeometryCollection } from "geojson";
+import React, { useMemo, useState } from "react";
+import { BufferGeometry, PointsMaterial, Vector3 } from "three";
+import { Html, Line, Text } from "@react-three/drei";
+import {
+  GeometryObject,
+  GeometryCollection,
+  FeatureCollection,
+  Feature,
+  GeoJsonProperties,
+} from "geojson";
 import {
   convertCoordsTo3D,
   createCoordinateArray,
@@ -9,18 +15,23 @@ import {
 } from "../../utils/earth-3d-utils";
 
 export interface GSONMeshProps {
-  geometry: GeometryObject;
+  feature: Feature;
+  properties?: GeoJsonProperties;
   radius?: number;
   color?: string;
   lineWidth?: number;
 }
 
 export const GSONMesh: React.FC<GSONMeshProps> = ({
-  geometry,
+  feature,
   radius = 2,
   color = "white",
-  lineWidth = 1.2
+  lineWidth = 1.2,
 }) => {
+  const { geometry, properties } = feature;
+
+  const [isPointerOver, setIsPointerOver] = useState(false);
+
   const countryGeom = useMemo(() => {
     const vertices: number[] = [];
 
@@ -55,12 +66,29 @@ export const GSONMesh: React.FC<GSONMeshProps> = ({
         break;
     }
 
-    const geom = new BufferGeometry().setFromPoints(
-      createVertexForEachPoint(vertices)
-    );
+    const numVertices = vertices.length / 3;
 
-    return vertices;
+    // Calculate the centroid of the polygon
+    const centroid = vertices
+      .reduce(
+        (acc, value, index) => {
+          const axisIndex = index % 3;
+          acc[axisIndex] += value;
+          return acc;
+        },
+        [0, 0, 0]
+      )
+      .map((coord) => coord / numVertices);
+
+    return { vertices, centroid };
   }, [geometry]);
 
-  return <Line points={countryGeom} color={color} lineWidth={lineWidth} />;
+  return (
+    <Line
+      name={properties!["name"]}
+      points={countryGeom.vertices}
+      color={color}
+      lineWidth={lineWidth}
+    />
+  );
 };
