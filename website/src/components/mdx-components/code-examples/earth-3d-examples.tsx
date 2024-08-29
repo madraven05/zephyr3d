@@ -9,8 +9,8 @@ export const Earth3DExample = () => {
     <div className="bg-white/5 h-72 rounded-md">
       <Canvas>
         <ambientLight />
-        <directionalLight intensity={1} position={[2, -2, 2]} />
-        <Earth3D textureType={"base"} />
+        <directionalLight intensity={2} position={[10, 10, 10]} />
+        <Earth3D withClouds textureType={"base"} />
         <OrbitControls />
       </Canvas>
     </div>
@@ -22,8 +22,8 @@ export const Earth3DGSONExample = () => {
     <div className="bg-white/5 h-72 rounded-md">
       <Canvas>
         <ambientLight />
-        <directionalLight position={[2, -2, 2]} />
-        <Earth3DGSON gsonPath="/countries.geo.json"/>
+        <directionalLight position={[2, -10, 2]} />
+        <Earth3DGSON meshColor="gray" withClouds gsonPath="/countries.geo.json"/>
         <OrbitControls />
       </Canvas>
     </div>

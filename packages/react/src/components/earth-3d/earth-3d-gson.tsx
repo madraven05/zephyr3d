@@ -5,11 +5,13 @@ import { Earth3D, Earth3DProps } from "./earth-3d";
 
 export interface Earth3DGSONProps extends Earth3DProps {
   gsonPath?: string;
+  meshColor?: string;
 }
 
 export const Earth3DGSON: React.FC<Earth3DGSONProps> = ({
-  radius = 2,
   gsonPath = "",
+  radius = 2,
+  meshColor = "white"
 }) => {
   const [geoJsonData, setGeoJsonData] = useState<FeatureCollection>();
 
@@ -36,9 +38,9 @@ export const Earth3DGSON: React.FC<Earth3DGSONProps> = ({
 
   return (
     <group>
-      <Earth3D radius={radius} />
+      <Earth3D radius={radius} withClouds />
       {geoJsonData.features.map((feature, idx) => (
-        <GSONMesh key={idx} geometry={feature.geometry} radius={radius} />
+        <GSONMesh key={idx} geometry={feature.geometry} radius={radius} color={meshColor} />
       ))}
     </group>
   );

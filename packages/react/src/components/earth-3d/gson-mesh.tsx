@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { BufferGeometry, PointsMaterial } from "three";
 import { Line } from "@react-three/drei";
-import { GeometryObject } from "geojson";
+import { GeometryObject, GeometryCollection } from "geojson";
 import {
   convertCoordsTo3D,
   createCoordinateArray,
@@ -10,14 +10,14 @@ import {
 
 export interface GSONMeshProps {
   geometry: GeometryObject;
-  radius: number;
+  radius?: number;
   color?: string;
   lineWidth?: number;
 }
 
 export const GSONMesh: React.FC<GSONMeshProps> = ({
   geometry,
-  radius,
+  radius = 2,
   color = "white",
   lineWidth = 1.2
 }) => {
