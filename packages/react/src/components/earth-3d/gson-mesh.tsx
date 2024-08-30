@@ -20,6 +20,7 @@ export interface GSONMeshProps {
   radius?: number;
   color?: string;
   lineWidth?: number;
+  hasAxialTilt?: boolean
 }
 
 export const GSONMesh: React.FC<GSONMeshProps> = ({
@@ -27,6 +28,7 @@ export const GSONMesh: React.FC<GSONMeshProps> = ({
   radius = 2,
   color = "white",
   lineWidth = 1.2,
+  hasAxialTilt = true
 }) => {
   const { geometry, properties } = feature;
 
@@ -89,6 +91,7 @@ export const GSONMesh: React.FC<GSONMeshProps> = ({
       points={countryGeom.vertices}
       color={color}
       lineWidth={lineWidth}
+      rotation={hasAxialTilt ? [0,23.44 * Math.PI/180, 0] : [0,0,0]}
     />
   );
 };

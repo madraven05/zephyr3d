@@ -17,6 +17,7 @@ export const Earth3DGSON: React.FC<Earth3DGSONProps> = ({
   radius = 2,
   meshColor = "white",
   legend = true,
+  withAxialTilt
 }) => {
   const [geoJsonData, setGeoJsonData] = useState<FeatureCollection>();
   const [isPointerOver, setIsPointerOver] = useState(false);
@@ -94,6 +95,7 @@ export const Earth3DGSON: React.FC<Earth3DGSONProps> = ({
             radius={radius}
             color={meshColor}
             properties={feature.properties}
+            hasAxialTilt={withAxialTilt}
           />
         ))}
         {isPointerOver ? (

@@ -12,14 +12,14 @@ const Earth3DGSON = React.lazy(() =>
   import("@zephyr3D/react").then((module) => ({ default: module.Earth3DGSON }))
 );
 
-export const Earth3DExample = () => {
+export const Earth3DExample = ({withAnimations = false}) => {
   return (
     <div className="bg-black h-72 rounded-md">
       <Canvas>
         <ambientLight intensity={0.1} />
-        <directionalLight intensity={1} position={[1, 3, -4]} />
+        <directionalLight intensity={1} position={[-5, 3, 4]} />
         <Suspense fallback={<Loader3D />}>
-          <Earth3D withClouds textureType={"base"} />
+          <Earth3D radius={2.5} withClouds withAnimations={withAnimations}/>
         </Suspense>
         <OrbitControls />
       </Canvas>

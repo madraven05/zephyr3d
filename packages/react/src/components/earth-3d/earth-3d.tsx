@@ -1,15 +1,11 @@
-import React, { useMemo } from "react";
-import { useLoader } from "@react-three/fiber";
+import React, { useMemo, useRef } from "react";
+import { useFrame, useLoader } from "@react-three/fiber";
 import {
-  AdditiveBlending,
-  MeshBasicMaterial,
+  Group,
+  Mesh,
   MeshPhongMaterial,
-  MultiplyBlending,
-  SphereGeometry,
-  SubtractiveBlending,
   TextureLoader,
 } from "three";
-import { Earth3DMaterial } from "../../materials";
 
 export interface Earth3DProps {
   radius?: number;
@@ -20,6 +16,8 @@ export interface Earth3DProps {
   cloudTransPath?: string;
   nightTexturePath?: string;
   withClouds?: boolean;
+  withAxialTilt?: boolean;
+  withAnimations?: boolean;
 }
 
 const texturePathMap = {
@@ -40,6 +38,8 @@ export const Earth3D: React.FC<Earth3DProps> = ({
   cloudMapPath = texturePathMap["cloud"],
   nightTexturePath = texturePathMap["night"],
   withClouds = false,
+  withAxialTilt = true,
+  withAnimations = false
 }) => {
   const [
     baseTexture,
@@ -57,6 +57,12 @@ export const Earth3D: React.FC<Earth3DProps> = ({
     nightTexturePath,
   ]);
 
+  const earthRef = useRef<Mesh>(null);
+  const cloudsRef = useRef<Mesh>(null);
+
+
+  const axialRotationY = 23.44 * Math.PI/180;
+  //#region Loading Materials
   const baseMat = useMemo(() => {
     const material = new MeshPhongMaterial({
       map: baseTexture,
@@ -118,17 +124,31 @@ export const Earth3D: React.FC<Earth3DProps> = ({
       }),
     [cloudTexture]
   );
+  //#endregion
+  
+  //#region Rotation Animation using useFrame()
+  useFrame(() => {
+    if(withAnimations) {
+      if(earthRef.current !== null) {
+        earthRef.current.rotation.y += 0.001;
+      }
+      if(cloudsRef.current !== null) {
+        cloudsRef.current.rotation.y += 0.0015;
+      }
+    }
+  })
+  //#endregion
 
   return (
-    <group>
-      <instancedMesh material={baseMat}>
+    <group  rotation={ withAxialTilt ? [0, axialRotationY, 0] : [0,0,0]}>
+      <mesh material={baseMat} ref={earthRef}>
         <sphereGeometry args={[radius, 64, 64]} />
-      </instancedMesh>
+      </mesh>
 
       {withClouds ? (
-        <instancedMesh material={cloudsMat}>
+        <mesh material={cloudsMat} ref={cloudsRef}>
           <sphereGeometry args={[radius + 0.02, 64, 64]} />
-        </instancedMesh>
+        </mesh>
       ) : null}
     </group>
   );
