@@ -18,7 +18,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ children }) => {
   return (
     <Disclosure
       as="div"
-      className="p-5 bg-slate-50/5 backdrop-blur-sm shadow-md rounded-xl"
+      className="p-5 bg-slate-50/5 backdrop-blur-sm shadow-md w-full rounded-xl"
       defaultOpen={true}
     >
       <DisclosureButton className="z-10 group rounded-lg flex w-full justify-between items-center">
