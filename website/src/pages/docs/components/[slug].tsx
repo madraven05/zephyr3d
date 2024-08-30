@@ -8,7 +8,8 @@ import path from "path";
 import { serialize } from "next-mdx-remote/serialize";
 import Prism from "prismjs";
 import { mdxComponents } from "@/components/mdx-components/mdx-components";
-
+import Head from "next/head";
+import { useRouter } from "next/router";
 
 interface ComponentDocProps {
   source: MDXRemoteSerializeResult;
@@ -26,15 +27,23 @@ const ComponentDoc = ({ source, frontMatter }: ComponentDocProps) => {
     Prism.highlightAll();
   });
 
-  return (
-    <div className="flex flex-col gap-5">
-      <h1>{frontMatter.title}</h1>
-      <p>{frontMatter.description}</p>
+  const router = useRouter();
+  const { slug } = router.query;
 
-      <MDXProvider components={mdxComponents}>
-        <MDXRemote {...source} />
-      </MDXProvider>
-    </div>
+  return (
+    <>
+      <Head>
+        <title>{`Zephyr3D - ${frontMatter.title}`}</title>
+      </Head>
+      <div className="flex flex-col flex-shrink w-full h-full justify-center gap-5">
+        <h1>{frontMatter.title}</h1>
+        <p>{frontMatter.description}</p>
+
+        <MDXProvider components={mdxComponents}>
+          <MDXRemote {...source} />
+        </MDXProvider>
+      </div>
+    </>
   );
 };
 

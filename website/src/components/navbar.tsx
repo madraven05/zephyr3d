@@ -23,7 +23,6 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const zephyrContext = useContext(ZephyrContext);
 
-
   useEffect(() => {
     if (darkModeEnabled) {
       document.documentElement.classList.toggle("dark");
@@ -31,7 +30,6 @@ const Navbar = () => {
     } else {
       document.documentElement.classList.remove("dark");
       zephyrContext?.setIsDarkModeEnabled(false);
-
     }
   }, [darkModeEnabled]);
 
@@ -47,6 +45,7 @@ const Navbar = () => {
         {/* Nav Items */}
         {navbarItems.map((item) => (
           <Link
+            key={item.title.toLowerCase()}
             href={item.link}
             className="text-lg hover:font-bold hover:-translate-y-1 hover:cursor-pointer transition duration-300 ease-in-out"
           >
@@ -70,16 +69,17 @@ const Navbar = () => {
         as="div"
         open={mobileOpen}
         onClose={() => setMobileOpen(false)}
-        className="flex lg:hidden fixed right-0 top-10"
+        className="z-30 flex lg:hidden fixed right-0 top-10"
       >
         <DialogPanel
           transition
-          className="z-30 bg-slate-600/10 backdrop-blur-lg h-screen w-72 -mx-5 my-5 shadow-lg rounded-xl text-sm/6 transition duration-200 ease-in-out [--anchor-gap:var(--spacing-5)] data-[closed]:-translate-y-full"
+          className="z-30 bg-slate-600/10 backdrop-blur-lg w-72 -mx-5 my-5 shadow-lg rounded-xl text-sm/6 transition duration-200 ease-in-out [--anchor-gap:var(--spacing-5)] data-[closed]:-translate-y-full"
         >
           <div className="p-10 flex flex-col gap-4 font-heading uppercase">
             {navbarItems.map((item) => (
               <Link
                 href={item.link}
+                key={item.title.toLowerCase()}
                 onClick={() => setMobileOpen(false)}
                 className="text-lg font-semibold hover:font-bold hover:-translate-y-1 hover:cursor-pointer transition duration-300 ease-in-out"
               >
