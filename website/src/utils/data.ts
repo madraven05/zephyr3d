@@ -15,11 +15,11 @@ export const sidebarNavItems: SidebarNavItems = {
           childItems: [
             {
               title: "Standard Earth 3D",
-              link: "/docs/components/product-card",
+              link: "/docs/components/standard-earth-3d",
             },
             {
               title: "Rendering GSON Data",
-              link: "/docs/components/product-card",
+              link: "/docs/components/geojson-earth-3d",
             },
           ],
         },
