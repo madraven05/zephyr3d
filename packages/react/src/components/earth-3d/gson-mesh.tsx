@@ -1,18 +1,15 @@
-import React, { useMemo, useState } from "react";
-import { BufferGeometry, PointsMaterial, Vector3 } from "three";
-import { Html, Line, Text } from "@react-three/drei";
-import {
-  GeometryObject,
-  GeometryCollection,
-  FeatureCollection,
-  Feature,
-  GeoJsonProperties,
-} from "geojson";
+import React, { useMemo, useRef, useState } from "react";
+import { Object3D, Vector3 } from "three";
+import { Line as MeshBoundary } from "@react-three/drei";
+import { Feature, GeoJsonProperties } from "geojson";
 import {
   convertCoordsTo3D,
   createCoordinateArray,
-  createVertexForEachPoint,
+  isMeshVisible,
 } from "../../utils/earth-3d-utils";
+import { axialRotationY } from "./earth-3d";
+import { ThreeEvent, useThree } from "@react-three/fiber";
+import { Line2 } from "three/examples/jsm/lines/Line2";
 
 export interface GSONMeshProps {
   feature: Feature;
@@ -20,7 +17,7 @@ export interface GSONMeshProps {
   radius?: number;
   color?: string;
   lineWidth?: number;
-  hasAxialTilt?: boolean
+  hasAxialTilt?: boolean;
 }
 
 export const GSONMesh: React.FC<GSONMeshProps> = ({
@@ -28,12 +25,16 @@ export const GSONMesh: React.FC<GSONMeshProps> = ({
   radius = 2,
   color = "white",
   lineWidth = 1.2,
-  hasAxialTilt = true
+  hasAxialTilt = true,
 }) => {
   const { geometry, properties } = feature;
 
   const [isPointerOver, setIsPointerOver] = useState(false);
+  const lineRef = useRef<Line2>(null);
 
+  const { camera, scene, gl } = useThree();
+
+  //#region Creating a list of vertices from GSON data
   const countryGeom = useMemo(() => {
     const vertices: number[] = [];
 
@@ -84,14 +85,40 @@ export const GSONMesh: React.FC<GSONMeshProps> = ({
 
     return { vertices, centroid };
   }, [geometry]);
+  //#endregion
+
+  //#region Pointer Event Functions
+  const handleOnPointerOver = (e: ThreeEvent<PointerEvent>) => {
+    e.stopPropagation();
+
+    const centroidWorldPos = new Vector3(...countryGeom.centroid);
+    const transformedCentroid = centroidWorldPos.applyMatrix4(
+      lineRef.current!.matrixWorld
+    );
+
+
+    if (isMeshVisible(transformedCentroid, camera, radius)) {
+      console.log(properties!["name"]);
+    }
+
+    setIsPointerOver(true);
+  };
+
+  const handleOnPointerLeave = (e: ThreeEvent<PointerEvent>) => {
+    setIsPointerOver(false);
+  };
+  //#endregion
 
   return (
-    <Line
+    <MeshBoundary
+      ref={lineRef}
+      onPointerOver={handleOnPointerOver}
+      onPointerLeave={handleOnPointerLeave}
       name={properties!["name"]}
       points={countryGeom.vertices}
       color={color}
       lineWidth={lineWidth}
-      rotation={hasAxialTilt ? [0,23.44 * Math.PI/180, 0] : [0,0,0]}
+      rotation={hasAxialTilt ? [0, axialRotationY, 0] : [0, 0, 0]}
     />
   );
 };

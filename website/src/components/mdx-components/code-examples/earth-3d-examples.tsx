@@ -12,16 +12,16 @@ const Earth3DGSON = React.lazy(() =>
   import("@zephyr3D/react").then((module) => ({ default: module.Earth3DGSON }))
 );
 
-export const Earth3DExample = ({withAnimations = false}) => {
+export const Earth3DExample = ({ withAnimations = false }) => {
   return (
     <div className="bg-black h-72 rounded-md">
       <Canvas>
         <ambientLight intensity={0.1} />
         <directionalLight intensity={1} position={[-5, 3, 4]} />
         <Suspense fallback={<Loader3D />}>
-          <Earth3D radius={2.5} withClouds withAnimations={withAnimations}/>
+          <Earth3D radius={2.5} withClouds withAnimations={withAnimations} />
         </Suspense>
-        <OrbitControls />
+        {/* <OrbitControls /> */}
       </Canvas>
     </div>
   );
@@ -29,9 +29,9 @@ export const Earth3DExample = ({withAnimations = false}) => {
 
 export const Earth3DGSONExample = () => {
   return (
-    <div className="bg-white/5 h-72 rounded-md">
+    <div className="bg-black h-72 rounded-md">
       <Canvas>
-        <ambientLight intensity={1}/>
+        <ambientLight intensity={1} />
         <directionalLight position={[1, -3, 4]} />
         <Suspense fallback={<Loader3D />}>
           <Earth3DGSON
@@ -40,7 +40,6 @@ export const Earth3DGSONExample = () => {
             gsonPath="/countries.geo.json"
           />
         </Suspense>
-
         <OrbitControls />
       </Canvas>
     </div>

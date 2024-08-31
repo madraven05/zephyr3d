@@ -5,6 +5,7 @@ import {
   Mesh,
   MeshPhongMaterial,
   TextureLoader,
+  Vector3,
 } from "three";
 
 export interface Earth3DProps {
@@ -28,6 +29,8 @@ const texturePathMap = {
   specular: "/earth-3d-specular-map.jpg",
   night: "/earth-3d-night-texture.jpg",
 };
+
+export const axialRotationY = 23.44 * Math.PI/180;
 
 export const Earth3D: React.FC<Earth3DProps> = ({
   radius = 2,
@@ -61,7 +64,7 @@ export const Earth3D: React.FC<Earth3DProps> = ({
   const cloudsRef = useRef<Mesh>(null);
 
 
-  const axialRotationY = 23.44 * Math.PI/180;
+  
   //#region Loading Materials
   const baseMat = useMemo(() => {
     const material = new MeshPhongMaterial({
@@ -136,11 +139,18 @@ export const Earth3D: React.FC<Earth3DProps> = ({
         cloudsRef.current.rotation.y += 0.0015;
       }
     }
+    // if(earthRef.current !== null) {
+    //   const meshWorldPos = new Vector3();
+    //   earthRef.current.getWorldPosition(meshWorldPos);
+    //   console.log(meshWorldPos);
+    // }
   })
   //#endregion
 
+  
+
   return (
-    <group  rotation={ withAxialTilt ? [0, axialRotationY, 0] : [0,0,0]}>
+    <group position={[0,0,0]} rotation={ withAxialTilt ? [0, axialRotationY, 0] : [0,0,0]}>
       <mesh material={baseMat} ref={earthRef}>
         <sphereGeometry args={[radius, 64, 64]} />
       </mesh>

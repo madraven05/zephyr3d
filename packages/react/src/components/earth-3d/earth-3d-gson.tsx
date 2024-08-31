@@ -3,8 +3,7 @@ import { GSONMesh } from "./gson-mesh";
 import { FeatureCollection } from "geojson";
 import { Earth3D, Earth3DProps } from "./earth-3d";
 import { Html, Text } from "@react-three/drei";
-import { ThreeEvent, useThree } from "@react-three/fiber";
-import { Group, Mesh, Raycaster, Vector2, Vector3 } from "three";
+import { Group, Vector3 } from "three";
 
 export interface Earth3DGSONProps extends Earth3DProps {
   gsonPath?: string;
@@ -17,7 +16,7 @@ export const Earth3DGSON: React.FC<Earth3DGSONProps> = ({
   radius = 2,
   meshColor = "white",
   legend = true,
-  withAxialTilt
+  withAxialTilt,
 }) => {
   const [geoJsonData, setGeoJsonData] = useState<FeatureCollection>();
   const [isPointerOver, setIsPointerOver] = useState(false);
@@ -26,38 +25,8 @@ export const Earth3DGSON: React.FC<Earth3DGSONProps> = ({
     new Vector3(0, 0, 0)
   );
 
+  
   const countriesRef = useRef<Group>(null);
-
-  const { camera, scene } = useThree();
-
-  const handleOnPointerOver = (e: ThreeEvent<PointerEvent>) => {
-    e.stopPropagation();
-    const raycaster = new Raycaster();
-    const mouse = new Vector2();
-
-    mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(e.clientY / window.innerWidth) * 2 + 1;
-
-    raycaster.setFromCamera(mouse, camera);
-
-    const intersects = raycaster.intersectObjects(countriesRef.current!.children, true);
-    // console.log(intersects);
-
-    if(intersects.length > 0) {
-      const intersectedObject = intersects[0].object;
-      if(intersectedObject instanceof Mesh && intersectedObject.name.length != 0) {
-        console.log(intersectedObject.name);
-      }  
-    } else {
-      setTextToShow(null);
-    }
-
-  };
-
-  const handleOnPointerLeave = () => {
-    setIsPointerOver(false);
-    document.body.style.cursor = "auto";
-  };
 
   useEffect(() => {
     const fetchGeoJson = async () => {
@@ -83,11 +52,7 @@ export const Earth3DGSON: React.FC<Earth3DGSONProps> = ({
   return (
     <group>
       <Earth3D radius={radius} withClouds />
-      <group
-      ref={countriesRef}
-        onPointerEnter={handleOnPointerOver}
-        onPointerLeave={handleOnPointerLeave}
-      >
+      <group ref={countriesRef}>
         {geoJsonData.features.map((feature, idx) => (
           <GSONMesh
             key={idx}
@@ -110,9 +75,6 @@ export const Earth3DGSON: React.FC<Earth3DGSONProps> = ({
           </Text>
         ) : null}
       </group>
-      <Html position={[-10,0,10]}>
-        <div>{textToShow}</div>
-      </Html>
     </group>
   );
 };

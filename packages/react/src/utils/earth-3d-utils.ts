@@ -2,7 +2,8 @@
  * Taken inspiration from https://github.com/jdomingu/ThreeGeoJSON/blob/master/lib/threeGeoJSON.js
  */
 
-import { Vector2, Vector3 } from "three";
+import { Camera } from "@react-three/fiber";
+import { Frustum, Matrix4, Vector2, Vector3 } from "three";
 
 export function convertCoordsTo3D(
   [long, lat]: [number, number],
@@ -106,3 +107,11 @@ export function createVertexForEachPoint(
   }
   return vector3Verts;
 }
+
+export const isMeshVisible = (
+  meshPosition: Vector3,
+  camera: Camera,
+  sphereRadius: number
+) => {
+  return false;
+};

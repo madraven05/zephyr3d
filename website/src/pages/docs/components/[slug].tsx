@@ -35,7 +35,7 @@ const ComponentDoc = ({ source, frontMatter }: ComponentDocProps) => {
       <Head>
         <title>{`Zephyr3D - ${frontMatter.title}`}</title>
       </Head>
-      <div className="flex flex-col flex-shrink w-full h-full justify-center gap-5">
+      <div className="flex flex-col flex-shrink w-full h-full justify-center gap-3">
         <h1>{frontMatter.title}</h1>
         <p>{frontMatter.description}</p>
 
