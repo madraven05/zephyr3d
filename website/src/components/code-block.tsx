@@ -28,7 +28,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ children }) => {
         </span>
         <FaAngleDown className="transition duration-200 ease-in-out group-data-[open]:rotate-180" />
       </DisclosureButton>
-      <DisclosurePanel transition className="mt-5">
+      <DisclosurePanel transition className="mt-5 transition duration-200 ease-in-out data-[closed]:-translate-y-4 data-[closed]:opacity-0">
         <pre>{children}</pre>
       </DisclosurePanel>
     </Disclosure>

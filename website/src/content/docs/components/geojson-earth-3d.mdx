@@ -1,0 +1,32 @@
+---
+id: "earth-3d-geojson"
+title: "Earth 3D GeoJSON"
+category: "data-display"
+package: "@zephyr3d/react"
+description: "An Earth 3D model for working with GeoJSON data."
+---
+
+<Earth3DGSONExample/>
+
+```javascript
+export const Earth3DGSONExample = () => {
+  return (
+    <div className="bg-white/5 h-72 rounded-md">
+      <Canvas>
+        <ambientLight intensity={1}/>
+        <directionalLight position={[1, -3, 4]} />
+        <Suspense fallback={<Loader3D />}>
+          <Earth3DGSON
+            meshColor="black"
+            withClouds
+            gsonPath="/countries.geo.json"
+          />
+        </Suspense>
+
+        <OrbitControls />
+      </Canvas>
+    </div>
+  );
+};
+
+```

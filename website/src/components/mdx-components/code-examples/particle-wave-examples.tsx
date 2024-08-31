@@ -1,9 +1,17 @@
-import React from "react";
-import {
-  ParticlesWave,
-  ParticlesWaveModel,
-  circularMotionXZ,
-} from "@zephyr3D/react";
+import React, { Suspense } from "react";
+import { circularMotionXZ } from "@zephyr3D/react";
+import Loader3D from "@/components/loader-3d";
+
+const ParticlesWave = React.lazy(() =>
+  import("@zephyr3D/react").then((module) => ({
+    default: module.ParticlesWave,
+  }))
+);
+const ParticlesWaveModel = React.lazy(() =>
+  import("@zephyr3D/react").then((module) => ({
+    default: module.ParticlesWaveModel,
+  }))
+);
 
 export const SimpleParticleWave = () => {
   return (
@@ -12,11 +20,13 @@ export const SimpleParticleWave = () => {
         <ambientLight intensity={1} />
         <pointLight position={[10, 10, 10]} intensity={2} />
         <directionalLight position={[0, 0, 10]} intensity={1.5} />
-        <ParticlesWaveModel
-          startColor="#fff"
-          endColor="#111"
-          particlesCount={5000}
-        />
+        <Suspense fallback={<Loader3D />}>
+          <ParticlesWaveModel
+            startColor="#fff"
+            endColor="#111"
+            particlesCount={5000}
+          />
+        </Suspense>
       </ParticlesWave>
     </div>
   );
@@ -29,12 +39,14 @@ export const CircularParticleWave = () => {
         <ambientLight intensity={1} />
         <pointLight position={[10, 10, 10]} intensity={2} />
         <directionalLight position={[0, 0, 10]} intensity={1.5} />
-        <ParticlesWaveModel
-          startColor="#fff"
-          endColor="#111"
-          particlesCount={5000}
-          waveFunction={circularMotionXZ}
-        />
+        <Suspense fallback={<Loader3D />}>
+          <ParticlesWaveModel
+            startColor="#fff"
+            endColor="#111"
+            particlesCount={5000}
+            waveFunction={circularMotionXZ}
+          />
+        </Suspense>
       </ParticlesWave>
     </div>
   );
