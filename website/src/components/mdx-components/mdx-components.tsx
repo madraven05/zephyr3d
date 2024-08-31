@@ -11,7 +11,6 @@ import {
   SimpleParticleWave,
 } from "./code-examples/particle-wave-examples";
 import CodeBlock from "../code-block";
-import {Earth3DExample, Earth3DGSONExample} from "./code-examples/earth-3d-examples";
 
 
 export const mdxComponents = {
@@ -23,8 +22,6 @@ export const mdxComponents = {
   SimpleParticleWave,
   CircularParticleWave,
   CustomWaveFunction,
-  Earth3DGSONExample,
-  Earth3DExample,
   pre: ({ ...props }) => (
     <CodeBlock {...props}></CodeBlock>
   ),

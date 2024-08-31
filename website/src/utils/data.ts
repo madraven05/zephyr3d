@@ -9,20 +9,6 @@ export const sidebarNavItems: SidebarNavItems = {
           title: "Product Card",
           link: "/docs/components/product-card",
         },
-        {
-          title: "Earth 3D",
-          link: "/docs/components/e-card",
-          childItems: [
-            {
-              title: "Standard Earth 3D",
-              link: "/docs/components/standard-earth-3d",
-            },
-            {
-              title: "Rendering GSON Data",
-              link: "/docs/components/geojson-earth-3d",
-            },
-          ],
-        },
       ],
     },
     {
