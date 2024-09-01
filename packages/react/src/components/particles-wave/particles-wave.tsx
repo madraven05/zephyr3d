@@ -49,8 +49,6 @@ export const ParticlesWaveModel: React.FC<ParticlesWaveModelProps> = ({
   const meshRef = useRef<InstancedMesh>(null);
   const dummy = useMemo(() => new Object3D(), []);
 
-  //   const material = new MeshStandardMaterial({ color: particleColor });
-
   const particles = useMemo(() => {
     const particlesArray = [];
     for (let i = 0; i < particlesCount; i++) {
@@ -73,8 +71,6 @@ export const ParticlesWaveModel: React.FC<ParticlesWaveModelProps> = ({
       const g = lerp(colA.g, colB.g, (i + 1) / particlesCount);
       const b = lerp(colA.b, colB.b, (i + 1) / particlesCount);
 
-      //   const color = new Color(r,g,b);
-      //   console.log(color)
       colorsArray[i * 3] = r;
       colorsArray[i * 3 + 1] = g;
       colorsArray[i * 3 + 2] = b;

@@ -1,0 +1,53 @@
+---
+id: "particles-mesh"
+title: "Particles Mesh"
+category: "visual-display"
+package: "@zephyr3d/react"
+description: "A mesh created with particles or meshes"
+---
+
+## Imports
+```javascript
+import { ParticleMesh } from "@zephyr3D/react";
+```
+
+## Usage
+
+The model that is to be turned into particles needs to be passed as a prop as shown in the example.
+I recommend using <a href="https://github.com/pmndrs/gltfjsx" target="_blank">`gltfjsx`</a> to generate the `model.tsx` file.
+
+### Basic Usage
+
+<ParticleMeshExample />
+
+```javascript
+import { Canvas } from "@react-three/fiber";
+import React from "react";
+import { ParticleMesh } from "@zephyr3D/react";
+import { NikeAirJordan } from "@/components/NikeAirJordan";
+import { OrbitControls } from "@react-three/drei";
+
+const ParticleMeshExample = () => {
+  return (
+    <div className="bg-black/10 dark:bg-white/10 rounded-lg shadow-sm h-80">
+      <Canvas>
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[5, 5, 5]} />
+        <NikeAirJordan position={[2, 0, 0]} />
+        <ParticleMesh
+          props={{ position: [-2, 0, 0] }}
+          scale={15}
+          particlesCount={500}
+          size={0.04}
+          ModelComponent={NikeAirJordan}
+        />
+        <OrbitControls />
+      </Canvas>
+    </div>
+  );
+};
+
+export default ParticleMeshExample;
+```
+
+## Props

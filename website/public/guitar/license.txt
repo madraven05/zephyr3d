@@ -1,0 +1,11 @@
+Model Information:
+* title:	Electric Guitar Explorer
+* source:	https://sketchfab.com/3d-models/electric-guitar-explorer-a7ffc570d3fe41c89b9dde195ab0faea
+* author:	Skabl (https://sketchfab.com/skabl_yt)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Electric Guitar Explorer" (https://sketchfab.com/3d-models/electric-guitar-explorer-a7ffc570d3fe41c89b9dde195ab0faea) by Skabl (https://sketchfab.com/skabl_yt) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

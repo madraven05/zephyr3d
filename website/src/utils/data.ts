@@ -20,7 +20,7 @@ export const sidebarNavItems: SidebarNavItems = {
         },
         {
           title: "Particled Mesh",
-          link: "/docs/components/",
+          link: "/docs/components/particle-mesh",
         },
       ],
     },
