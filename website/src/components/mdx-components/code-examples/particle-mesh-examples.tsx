@@ -17,10 +17,10 @@ const ParticleMeshExample = () => {
         <directionalLight position={[5, 5, 5]} />
         <ParticleMesh
           props={{ position: [0, 0, 0] }}
-          // scale={15}
-          particlesCount={5000}
-          size={0.5}
-          ModelComponent={WolfLP}
+          scale={15}
+          particlesCount={1000}
+          size={0.01}
+          ModelComponent={NikeAirJordan}
         />
         <OrbitControls />
         <EffectComposer>

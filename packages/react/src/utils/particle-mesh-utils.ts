@@ -55,11 +55,12 @@ export const convertToParticleMesh = (
   meshGroup: Group,
   groupRef: RefObject<Group<Object3DEventMap>>,
   particlesCount: number,
-  size: number
+  size: number,
+  metadata: { totalPoints: number; }
 ) => {
   meshGroup.children.forEach((child) => {
     if ((child as Group).isGroup) {
-      convertToParticleMesh(child as Group, groupRef, particlesCount, size);
+      convertToParticleMesh(child as Group, groupRef, particlesCount, size, metadata);
     } else if ((child as Mesh).isMesh) {
       const childMesh = child as Mesh;
       const vertices = childMesh.geometry.getAttribute("position")
@@ -67,6 +68,7 @@ export const convertToParticleMesh = (
 
       const newVertices = samplePointsFromVertices(vertices, particlesCount);
       addPointsMesh(newVertices, groupRef, childMesh, size);
+      metadata.totalPoints += newVertices.length/3;
     }
   });
 };
