@@ -11,7 +11,7 @@ import {
   SimpleParticleWave,
 } from "./code-examples/particle-wave-examples";
 import CodeBlock from "../code-block";
-
+import ParticleMeshExample from "./code-examples/particle-mesh-examples";
 
 export const mdxComponents = {
   ProductCard,
@@ -22,7 +22,6 @@ export const mdxComponents = {
   SimpleParticleWave,
   CircularParticleWave,
   CustomWaveFunction,
-  pre: ({ ...props }) => (
-    <CodeBlock {...props}></CodeBlock>
-  ),
+  ParticleMeshExample,
+  pre: ({ ...props }) => <CodeBlock {...props}></CodeBlock>,
 };

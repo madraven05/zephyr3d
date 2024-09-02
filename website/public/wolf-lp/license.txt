@@ -1,0 +1,11 @@
+Model Information:
+* title:	Wolf
+* source:	https://sketchfab.com/3d-models/wolf-e319f122c2474d3186b841b019fb0edd
+* author:	OLEKSO (https://sketchfab.com/oleksabasarab)
+
+Model License:
+* license type:	CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)
+* requirements:	Author must be credited. No commercial use.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Wolf" (https://sketchfab.com/3d-models/wolf-e319f122c2474d3186b841b019fb0edd) by OLEKSO (https://sketchfab.com/oleksabasarab) licensed under CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)

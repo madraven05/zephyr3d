@@ -158,7 +158,7 @@ type GLTFResult = GLTF & {
 export function NikeAirJordan(props: JSX.IntrinsicElements['group']) {
   const { nodes, materials } = useGLTF('/nike-air-jordan/scene.gltf') as GLTFResult
   return (
-    <group {...props} dispose={null}>
+    <group scale={15} {...props} dispose={null}>
       <mesh geometry={nodes.Object_8.geometry} material={materials['Scene_-_Root_1_1']} />
       <mesh geometry={nodes.Object_9.geometry} material={materials['Scene_-_Root_1_1']} />
       <mesh geometry={nodes.Object_10.geometry} material={materials['Scene_-_Root_1_1']} />

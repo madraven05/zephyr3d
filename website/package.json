@@ -16,6 +16,7 @@
     "@types/mapbox__rehype-prism": "^0.8.3",
     "@types/prismjs": "^1.26.4",
     "fs": "^0.0.1-security",
+    "gltfjsx": "^6.5.0",
     "gray-matter": "^4.0.3",
     "next": "14.2.6",
     "next-mdx-remote": "^5.0.0",
