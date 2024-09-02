@@ -31,4 +31,4 @@ export function ConverseHT(props: JSX.IntrinsicElements['group']) {
   )
 }
 
-useGLTF.preload('/scene.gltf')
+useGLTF.preload('/converse-ht/scene.gltf')

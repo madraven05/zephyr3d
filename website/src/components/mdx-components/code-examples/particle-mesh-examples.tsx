@@ -3,6 +3,11 @@ import React from "react";
 import { ParticleMesh } from "@zephyr3D/react";
 import { NikeAirJordan } from "@/components/NikeAirJordan";
 import { OrbitControls } from "@react-three/drei";
+import { Guitar } from "@/components/guitar";
+import { ConverseHT } from "@/components/ConverseHT";
+import { WolfHP } from "@/components/wolf-hp";
+import { WolfLP } from "@/components/wolf-lp";
+import { EffectComposer, Bloom } from "@react-three/postprocessing";
 
 const ParticleMeshExample = () => {
   return (
@@ -10,15 +15,22 @@ const ParticleMeshExample = () => {
       <Canvas>
         <ambientLight intensity={0.5} />
         <directionalLight position={[5, 5, 5]} />
-        <NikeAirJordan position={[2, 0, 0]} />
         <ParticleMesh
-          props={{ position: [-2, 0, 0] }}
-          scale={15}
-          particlesCount={800}
-          size={0.04}
-          ModelComponent={NikeAirJordan}
+          props={{ position: [0, 0, 0] }}
+          // scale={15}
+          particlesCount={5000}
+          size={0.5}
+          ModelComponent={WolfLP}
         />
         <OrbitControls />
+        <EffectComposer>
+            <Bloom
+              luminanceThreshold={0} // Controls which parts of the scene should glow
+              luminanceSmoothing={0} // Smoothing between bright and dark areas
+              intensity={1.5} // Controls the intensity of the bloom effect
+              // blendMode={}
+            />
+          </EffectComposer>
       </Canvas>
     </div>
   );
