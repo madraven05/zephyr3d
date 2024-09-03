@@ -1,11 +1,17 @@
-import { Group } from "three";
+import { BufferGeometry, Group } from "three";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { convertToParticleMesh } from "../../utils/particle-mesh-utils";
+import {
+  getAllMeshGeometries,
+  samplePointsOnGeometry,
+} from "../../utils/particle-mesh-utils";
+import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
+import * as THREE from "three";
 
 export interface ParticleMeshProps {
   ModelComponent: React.FC;
   particlesCount?: number;
   size?: number;
+  color?: string;
   scale?: number;
   props?: JSX.IntrinsicElements["group"];
 }
@@ -15,27 +21,37 @@ export const ParticleMesh: React.FC<ParticleMeshProps> = ({
   particlesCount = 1000,
   size = 0.02,
   scale = 1,
+  color = "white",
   props,
 }) => {
   const tempGroupRef = useRef<Group>(null);
-  const groupRef = useRef<Group>(null);
-  let metadata = { totalPoints: 0 };
+  const pointsRef = useRef<THREE.Points>(null);
 
-  
   useEffect(() => {
     if (tempGroupRef.current) {
       const meshGroup = tempGroupRef.current;
+      const geometries: BufferGeometry[] = [];
 
-      convertToParticleMesh(
-        meshGroup,
-        groupRef,
-        particlesCount,
-        size,
-        metadata
-      );
-      console.log(metadata);
-      tempGroupRef.current.remove();
+      // Get all mesh geometries
+      getAllMeshGeometries(meshGroup, geometries);
 
+      // merge all geometries
+      const mergedGeometry = new BufferGeometry();
+      mergedGeometry.copy(mergeGeometries(geometries));
+
+      if (mergedGeometry) {
+        // sample points on the merged geometry
+        const points = samplePointsOnGeometry(mergedGeometry, particlesCount);
+        
+        pointsRef.current!.geometry.setAttribute(
+          "position",
+          new THREE.BufferAttribute(points, 3)
+        );
+
+        tempGroupRef.current.remove();
+      }
+    } else {
+      console.log("Issue with merging geometries!")
     }
   }, [particlesCount, ModelComponent, size]);
 
@@ -44,7 +60,10 @@ export const ParticleMesh: React.FC<ParticleMeshProps> = ({
       <group ref={tempGroupRef} visible={false}>
         <ModelComponent />
       </group>
-      <group {...props} scale={scale} ref={groupRef} visible={true}></group>
+      <points scale={scale} ref={pointsRef}>
+        <bufferGeometry />
+        <pointsMaterial color={color} size={size} />
+      </points>
     </>
   );
 };

@@ -24,8 +24,8 @@ I recommend using <a href="https://github.com/pmndrs/gltfjsx" target="_blank">`g
 import { Canvas } from "@react-three/fiber";
 import React from "react";
 import { ParticleMesh } from "@zephyr3D/react";
-import { NikeAirJordan } from "@/components/NikeAirJordan";
 import { OrbitControls } from "@react-three/drei";
+import { WolfHP } from "@/components/wolf-hp";
 
 const ParticleMeshExample = () => {
   return (
@@ -33,14 +33,15 @@ const ParticleMeshExample = () => {
       <Canvas>
         <ambientLight intensity={0.5} />
         <directionalLight position={[5, 5, 5]} />
-        <NikeAirJordan position={[2, 0, 0]} />
         <ParticleMesh
+          color="#f3ad4b"
+          scale={3}
           props={{ position: [-2, 0, 0] }}
-          scale={15}
-          particlesCount={500}
-          size={0.04}
-          ModelComponent={NikeAirJordan}
+          particlesCount={2000}
+          size={0.02}
+          ModelComponent={WolfHP}
         />
+        <WolfHP scale={1.5} position={[2,0,0]}/>
         <OrbitControls />
       </Canvas>
     </div>
@@ -48,6 +49,7 @@ const ParticleMeshExample = () => {
 };
 
 export default ParticleMeshExample;
+
 ```
 
 ## Props

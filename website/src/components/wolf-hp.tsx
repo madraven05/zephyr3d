@@ -7,73 +7,95 @@ Source: https://sketchfab.com/3d-models/wolf-with-animations-f3769a474a714ebbbac
 Title: Wolf with Animations
 */
 
-import * as THREE from 'three'
-import React from 'react'
-import { useGraph } from '@react-three/fiber'
-import { useGLTF, useAnimations } from '@react-three/drei'
-import { GLTF, SkeletonUtils } from 'three-stdlib'
+import * as THREE from "three";
+import React from "react";
+import { useGraph } from "@react-three/fiber";
+import { useGLTF, useAnimations } from "@react-three/drei";
+import { GLTF, SkeletonUtils } from "three-stdlib";
 
-type ActionName = '01_Run' | '02_walk' | '03_creep' | '04_Idle' | '05_site'
+type ActionName = "01_Run" | "02_walk" | "03_creep" | "04_Idle" | "05_site";
 
 interface GLTFAction extends THREE.AnimationClip {
-  name: ActionName
+  name: ActionName;
 }
 
 type GLTFResult = GLTF & {
   nodes: {
-    Plane_unnamed_0: THREE.Mesh
-    Object_7: THREE.SkinnedMesh
-    Object_9: THREE.SkinnedMesh
-    Object_11: THREE.SkinnedMesh
-    Object_12: THREE.SkinnedMesh
-    Object_13: THREE.SkinnedMesh
-    _rootJoint: THREE.Bone
-  }
+    Plane_unnamed_0: THREE.Mesh;
+    Object_7: THREE.SkinnedMesh;
+    Object_9: THREE.SkinnedMesh;
+    Object_11: THREE.SkinnedMesh;
+    Object_12: THREE.SkinnedMesh;
+    Object_13: THREE.SkinnedMesh;
+    _rootJoint: THREE.Bone;
+  };
   materials: {
-    unnamed: THREE.MeshStandardMaterial
-    fur__fella3_jpg_001: THREE.MeshStandardMaterial
-    Material__wolf_col_tga: THREE.MeshStandardMaterial
-    eyes: THREE.MeshStandardMaterial
-    claws: THREE.MeshStandardMaterial
-    teeth__nor2_tga: THREE.MeshStandardMaterial
-  }
-  animations: GLTFAction[]
-}
+    unnamed: THREE.MeshStandardMaterial;
+    fur__fella3_jpg_001: THREE.MeshStandardMaterial;
+    Material__wolf_col_tga: THREE.MeshStandardMaterial;
+    eyes: THREE.MeshStandardMaterial;
+    claws: THREE.MeshStandardMaterial;
+    teeth__nor2_tga: THREE.MeshStandardMaterial;
+  };
+  animations: GLTFAction[];
+};
 
-export function WolfHP(props: JSX.IntrinsicElements['group']) {
-  const groupRef = React.useRef<THREE.Group>()
-  const { scene, animations } = useGLTF('/wolf-highpoly/scene.gltf')
-  const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene])
-  const { nodes, materials } = useGraph(clone) as GLTFResult
-  const { actions } = useAnimations(animations, groupRef)
+export function WolfHP(props: JSX.IntrinsicElements["group"]) {
+  const groupRef = React.useRef<THREE.Group>();
+  const { scene, animations } = useGLTF("/wolf-highpoly/scene.gltf");
+  const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
+  const { nodes, materials } = useGraph(clone) as GLTFResult;
+  const { actions } = useAnimations(animations, groupRef);
   return (
-    <group  {...props} dispose={null}>
+    <group {...props} dispose={null}>
       <group name="Sketchfab_Scene">
-        <group name="Sketchfab_model" rotation={[-Math.PI / 2, 0, -1.593]} scale={1.977}>
-          <group name="e4ef26d3d7a44d328db4b473b35c6be8fbx" rotation={[Math.PI / 2, 0, 0]}>
+        <group name="Sketchfab_model" scale={1.977}>
+          <group name="e4ef26d3d7a44d328db4b473b35c6be8fbx">
             <group name="Object_2">
               <group name="RootNode">
                 <group name="Object_4">
                   <primitive object={nodes._rootJoint} />
-                  <group name="Object_6" position={[0, 0.002, 0]} rotation={[-Math.PI / 2, 0, 0]} />
-                  <group name="Object_8" position={[0, 0.002, 0]} rotation={[-Math.PI / 2, 0, 0]} />
-                  <group name="Object_10" position={[0, 0.002, 0]} rotation={[-Math.PI / 2, 0, 0]} />
-                  <group name="Plane" position={[0, -0.348, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-                    <mesh name="Plane_unnamed_0" geometry={nodes.Plane_unnamed_0.geometry} material={materials.unnamed} />
-                  </group>
+                  <group name="Object_6" position={[0, 0.002, 0]} />
+                  <group name="Object_8" position={[0, 0.002, 0]} />
+
                   <group name="Wolf2" position={[0, 0, 0.002]} />
                   <group name="Wolf1" position={[0, 0, 0.002]} />
                   <group name="Wolf3" position={[0, 0, 0.002]} />
-                  <group name="Hemi" position={[-0.85, 1.001, 0.915]} rotation={[0.751, 0.1, 0.083]}>
-                    <group name="Object_68" rotation={[Math.PI / 2, 0, 0]}>
+                  <group name="Hemi" position={[-0.85, 1.001, 0.915]}>
+                    <group name="Object_68">
                       <group name="Object_69" />
                     </group>
                   </group>
-                  <skinnedMesh name="Object_7" geometry={nodes.Object_7.geometry} material={materials.fur__fella3_jpg_001} skeleton={nodes.Object_7.skeleton} />
-                  <skinnedMesh name="Object_9" geometry={nodes.Object_9.geometry} material={materials.Material__wolf_col_tga} skeleton={nodes.Object_9.skeleton} />
-                  <skinnedMesh name="Object_11" geometry={nodes.Object_11.geometry} material={materials.eyes} skeleton={nodes.Object_11.skeleton} />
-                  <skinnedMesh name="Object_12" geometry={nodes.Object_12.geometry} material={materials.claws} skeleton={nodes.Object_12.skeleton} />
-                  <skinnedMesh name="Object_13" geometry={nodes.Object_13.geometry} material={materials.teeth__nor2_tga} skeleton={nodes.Object_13.skeleton} />
+                  <skinnedMesh
+                    name="Object_7"
+                    geometry={nodes.Object_7.geometry}
+                    material={materials.fur__fella3_jpg_001}
+                    skeleton={nodes.Object_7.skeleton}
+                  />
+                  <skinnedMesh
+                    name="Object_9"
+                    geometry={nodes.Object_9.geometry}
+                    material={materials.Material__wolf_col_tga}
+                    skeleton={nodes.Object_9.skeleton}
+                  />
+                  <skinnedMesh
+                    name="Object_11"
+                    geometry={nodes.Object_11.geometry}
+                    material={materials.eyes}
+                    skeleton={nodes.Object_11.skeleton}
+                  />
+                  <skinnedMesh
+                    name="Object_12"
+                    geometry={nodes.Object_12.geometry}
+                    material={materials.claws}
+                    skeleton={nodes.Object_12.skeleton}
+                  />
+                  <skinnedMesh
+                    name="Object_13"
+                    geometry={nodes.Object_13.geometry}
+                    material={materials.teeth__nor2_tga}
+                    skeleton={nodes.Object_13.skeleton}
+                  />
                 </group>
               </group>
             </group>
@@ -81,7 +103,7 @@ export function WolfHP(props: JSX.IntrinsicElements['group']) {
         </group>
       </group>
     </group>
-  )
+  );
 }
 
-useGLTF.preload('/wolf-highpoly/scene.gltf')
+useGLTF.preload("/wolf-highpoly/scene.gltf");
