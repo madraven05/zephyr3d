@@ -1,5 +1,5 @@
 import { BufferGeometry, Group } from "three";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { forwardRef, useEffect, useRef } from "react";
 import {
   getAllMeshGeometries,
   samplePointsOnGeometry,
@@ -13,57 +13,66 @@ export interface ParticleMeshProps {
   size?: number;
   color?: string;
   scale?: number;
-  props?: JSX.IntrinsicElements["group"];
+  props?: JSX.IntrinsicElements["points"];
 }
 
-export const ParticleMesh: React.FC<ParticleMeshProps> = ({
-  ModelComponent,
-  particlesCount = 1000,
-  size = 0.02,
-  scale = 1,
-  color = "white",
-  props,
-}) => {
-  const tempGroupRef = useRef<Group>(null);
-  const pointsRef = useRef<THREE.Points>(null);
+export const ParticleMesh = forwardRef<THREE.Group, ParticleMeshProps>(
+  (
+    {
+      ModelComponent,
+      particlesCount = 1000,
+      size = 0.02,
+      color = "white",
+      scale = 1,
+      props,
+    },
+    ref
+  ) => {
+    const tempGroupRef = useRef<Group>(null);
+    const pointsRef = useRef<THREE.Points>(null);
 
-  useEffect(() => {
-    if (tempGroupRef.current) {
-      const meshGroup = tempGroupRef.current;
-      const geometries: BufferGeometry[] = [];
+    useEffect(() => {
+      if (tempGroupRef.current) {
+        const meshGroup = tempGroupRef.current;
+        const geometries: BufferGeometry[] = [];
 
-      // Get all mesh geometries
-      getAllMeshGeometries(meshGroup, geometries);
+        // Get all mesh geometries
+        getAllMeshGeometries(meshGroup, geometries);
 
-      // merge all geometries
-      const mergedGeometry = new BufferGeometry();
-      mergedGeometry.copy(mergeGeometries(geometries));
-
-      if (mergedGeometry) {
-        // sample points on the merged geometry
-        const points = samplePointsOnGeometry(mergedGeometry, particlesCount);
-        
-        pointsRef.current!.geometry.setAttribute(
-          "position",
-          new THREE.BufferAttribute(points, 3)
+        // merge all geometries
+        const mergedGeometry = new BufferGeometry();
+        mergedGeometry.copy(
+          mergeGeometries(geometries).center().scale(scale, scale, scale)
         );
 
-        tempGroupRef.current.remove();
-      }
-    } else {
-      console.log("Issue with merging geometries!")
-    }
-  }, [particlesCount, ModelComponent, size]);
+        if (mergedGeometry) {
+          // sample points on the merged geometry
+          const points = samplePointsOnGeometry(mergedGeometry, particlesCount);
 
-  return (
-    <>
-      <group ref={tempGroupRef} visible={false}>
-        <ModelComponent />
-      </group>
-      <points scale={scale} ref={pointsRef}>
-        <bufferGeometry />
-        <pointsMaterial color={color} size={size} />
-      </points>
-    </>
-  );
-};
+          pointsRef.current!.geometry.setAttribute(
+            "position",
+            new THREE.BufferAttribute(points, 3)
+          );
+        }
+      } else {
+        console.log("Issue with merging geometries!");
+      }
+      tempGroupRef.current!.remove();
+    }, [particlesCount, ModelComponent, size]);
+
+    return (
+      <>
+        <group ref={tempGroupRef} visible={false}>
+          <ModelComponent />
+        </group>
+
+        <group ref={ref}>
+          <points {...props} scale={scale} ref={pointsRef}>
+            <bufferGeometry />
+            <pointsMaterial color={color} size={size} />
+          </points>
+        </group>
+      </>
+    );
+  }
+);

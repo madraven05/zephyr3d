@@ -1,4 +1,4 @@
-import { BufferGeometry, Group, Mesh, Vector3 } from "three";
+import { BufferGeometry, Group, Matrix4, Mesh, Vector3 } from "three";
 import { MeshSurfaceSampler } from "three/examples/jsm/math/MeshSurfaceSampler";
 
 export const samplePointsOnGeometry = (
@@ -29,24 +29,30 @@ export const getAllMeshGeometries = (
       getAllMeshGeometries(child as Group, geometries);
     } else if ((child as Mesh).isMesh) {
       const childMesh = child as Mesh;
-
-      const geometry = childMesh.geometry
-        .clone()
-        .applyMatrix4(childMesh.matrixWorld);
-
-      // Convert to non-indexed geometry if indexed
-      const nonIndexedGeometry = geometry.index
-        ? geometry.toNonIndexed()
-        : geometry;
-
-      // Remove unwanted attributes
-      for (const key in nonIndexedGeometry.attributes) {
-        if (key !== "position") {
-          nonIndexedGeometry.deleteAttribute(key);
-        }
-      }
-
-      geometries.push(nonIndexedGeometry);
+      getNonIndexGeometry(childMesh, geometries);
     }
   });
+};
+
+export const getNonIndexGeometry = (
+  childMesh: Mesh,
+  geometries: BufferGeometry[]
+) => {
+  const geometry = childMesh.geometry
+    .clone()
+    .applyMatrix4(childMesh.matrixWorld);
+
+  // Convert to non-indexed geometry if indexed
+  const nonIndexedGeometry = geometry.index
+    ? geometry.toNonIndexed()
+    : geometry;
+
+  // Remove unwanted attributes
+  for (const key in nonIndexedGeometry.attributes) {
+    if (key !== "position") {
+      nonIndexedGeometry.deleteAttribute(key);
+    }
+  }
+  nonIndexedGeometry.applyMatrix4(new Matrix4().makeRotationFromEuler(childMesh.rotation));
+  geometries.push(nonIndexedGeometry);
 };

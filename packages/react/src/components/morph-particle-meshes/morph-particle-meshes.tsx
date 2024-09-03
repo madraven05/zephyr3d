@@ -1,120 +1,136 @@
-import React, { useEffect, useRef } from "react";
-import { Group, Mesh } from "three";
-import { useSpring } from "@react-spring/three";
-import { ParticleMeshProps } from "../particle-mesh";
-import {
-} from "../../utils/particle-mesh-utils";
-import { useFrame } from "@react-three/fiber";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { ParticleMesh, ParticleMeshProps } from "../particle-mesh";
+import * as THREE from "three";
+import { useFrame, useThree } from "@react-three/fiber";
 import { lerp } from "three/src/math/MathUtils";
 
 export interface MorphParticleMeshesProps {
-  fromParticleMeshProps: ParticleMeshProps;
-  toParticleMeshProps: ParticleMeshProps;
+  particlesCount: number;
+  fromProps: ParticleMeshProps;
+  toProps: ParticleMeshProps;
+  timeout?: number;
 }
 
 export const MorphParticleMeshes: React.FC<MorphParticleMeshesProps> = ({
-  fromParticleMeshProps,
-  toParticleMeshProps,
+  particlesCount = 1000,
+  fromProps,
+  toProps,
+  timeout = 2000,
 }) => {
-  const tempFromGroupRef = useRef<Group>(null);
-  const tempToGroupRef = useRef<Group>(null);
+  const fromRef = useRef<THREE.Group>(null);
+  const toRef = useRef<THREE.Group>(null);
 
-  const fromGroupRef = useRef<Group>(null);
-  const toGroupRef = useRef<Group>(null);
+  const { gl, scene, camera } = useThree();
 
-  const FromComponent = fromParticleMeshProps.ModelComponent;
-  const ToComponent = toParticleMeshProps.ModelComponent;
+  //   const [fromPositions, setFromPositions] = useState<Float32Array | null>(null);
+  //   const [targetPositions, setTargetPositions] = useState<Float32Array | null>(
+  //     null
+  //   );
+  const [isMorphing, setIsMorphing] = useState(false);
 
-  //#region create the particle meshes for both the components
+  // update from and to props
+  toProps = {
+    ...toProps,
+    particlesCount: particlesCount,
+    color: "yellow",
+    props: { ...toProps.props, visible: false },
+  };
+
+  fromProps = {
+    ...fromProps,
+    color: "yellow",
+    particlesCount: particlesCount,
+  };
+
+  let pu = useMemo(
+    () => ({
+      morphValue: { value: 0.0 },
+    }),
+    []
+  );
+
   useEffect(() => {
-    if (tempFromGroupRef.current && tempToGroupRef.current) {
-      const fromMeshGroup = tempFromGroupRef.current;
-      const toMeshGroup = tempToGroupRef.current;
+    if (fromRef.current && toRef.current) {
+      const fromPointsMesh = fromRef.current.children[0] as THREE.Points;
+      const fromPositions = fromPointsMesh.geometry.attributes.position
+        .array as Float32Array;
 
+      const toPointsMesh = toRef.current.children[0] as THREE.Points;
+      const toPositions = toPointsMesh.geometry.attributes.position
+        .array as Float32Array;
 
-    //   convertToParticleMesh(
-    //     fromMeshGroup,
-    //     fromGroupRef,
-    //     fromParticleMeshProps.particlesCount!,
-    //     fromParticleMeshProps.size!,
-    //   );
+      fromPointsMesh.geometry.setAttribute(
+        "positionStart",
+        new THREE.BufferAttribute(fromPositions, 3)
+      );
 
-    //   convertToParticleMesh(
-    //     toMeshGroup,
-    //     toGroupRef,
-    //     toParticleMeshProps.particlesCount!,
-    //     toParticleMeshProps.size!,
-    //   );
+      fromPointsMesh.geometry.setAttribute(
+        "positionTarget",
+        new THREE.BufferAttribute(toPositions, 3)
+      );
 
+      fromPointsMesh.geometry.setAttribute(
+        "rotDir",
+        new THREE.Float32BufferAttribute(
+          new Array(particlesCount)
+            .fill(0)
+            .map(() => (Math.random() < 0.5 ? -1 : 1)),
+          1
+        )
+      );
 
-      tempFromGroupRef.current.remove();
+      const material = fromPointsMesh.material as THREE.PointsMaterial;
+
+      material.onBeforeCompile = (shader) => {
+        shader.uniforms.morphValue = pu.morphValue;
+        shader.vertexShader = `
+          uniform float morphValue;
+          attribute vec3 positionStart;
+          attribute vec3 positionTarget;
+          attribute float rotDir;
+          
+          mat2 rot2d(float a){ return mat2(cos(a), sin(a), -sin(a), cos(a));}
+          ${shader.vertexShader}
+        `.replace(
+          `#include <begin_vertex>`,
+          `#include <begin_vertex>
+          
+            vec3 pStart = positionStart;
+            vec3 pEnd = positionTarget;
+            
+            float distRatio = sin(morphValue * PI);
+            
+            vec3 pos = mix(pStart, pEnd, morphValue);
+            transformed = pos + normalize(pos) * distRatio * 2.5;
+            
+          `
+        );
+      };
+      toRef.current.remove();
+
+      setTimeout(() => setIsMorphing(true), timeout);
     }
   }, []);
-  //#endregion
 
-  //#region animate
-  const { morphFactor } = useSpring({
-    morphFactor: 1,
-    from: { morphFactor: 0 },
-    config: { duration: 2000 },
-  });
-
+  let t = 0;
+  // update target positions
   useFrame(({ clock }) => {
-    const t = 0.005;
-    if (fromGroupRef.current && toGroupRef.current) {
-      fromGroupRef.current.children.forEach((child, index) => {
-        const target = toGroupRef.current?.children[index] as Mesh;
-        const childMesh = child as Mesh;
-        const fromPosArr = childMesh.geometry.attributes.position
-          .array as Float32Array;
-        const toPosArr = target.geometry.attributes.position
-          .array as Float32Array;
+    t += 0.016;
+    if (isMorphing) {
+      if (pu.morphValue.value >= 1) {
+        setIsMorphing(false);
+      }
+      //   console.log(t);
+      pu.morphValue.value = Math.sin(t * 0.08) + 0.0001;
 
-        const length = Math.min(fromPosArr.length, toPosArr.length);
-
-        for (let i = 0; i < length; i++) {
-          fromPosArr[i] = lerp(fromPosArr[i], toPosArr[i], t);
-          fromPosArr[i + 1] = lerp(fromPosArr[i + 1], toPosArr[i + 1], t);
-          fromPosArr[i + 2] = lerp(fromPosArr[i + 2], toPosArr[i + 2], t);
-        }
-
-        if (toParticleMeshProps.props && 
-            Array.isArray(toParticleMeshProps.props.position) &&
-            toParticleMeshProps.props.position.length === 3) {
-            fromGroupRef.current!.position.set(
-              toParticleMeshProps.props.position[0],
-              toParticleMeshProps.props.position[1],
-              toParticleMeshProps.props.position[2]
-            );
-          }
-          if (toParticleMeshProps.props && 
-            Array.isArray(toParticleMeshProps.props.scale) &&
-            toParticleMeshProps.props.scale.length === 3) {
-            fromGroupRef.current!.scale.set(
-              toParticleMeshProps.props.scale[0],
-              toParticleMeshProps.props.scale[1],
-              toParticleMeshProps.props.scale[2]
-            );
-          }
-
-        childMesh.geometry.attributes.position.needsUpdate = true;
-      });
-      //   fromGroupRef.current.props
-      
+      //   console.log(pu.morphValue.value)
     }
   });
-  //#endregion
+
   return (
     <>
-      <group ref={tempFromGroupRef} visible={false}>
-        <FromComponent />
-      </group>
-      <group ref={tempToGroupRef} visible={false}>
-        <ToComponent />
-      </group>
-
-      <group {...fromParticleMeshProps!.props} ref={fromGroupRef}></group>
-      <group {...toParticleMeshProps!.props} visible={false} ref={toGroupRef}></group>
+      <ParticleMesh ref={fromRef} {...fromProps} />
+      <ParticleMesh ref={toRef} {...toProps} />
     </>
   );
 };

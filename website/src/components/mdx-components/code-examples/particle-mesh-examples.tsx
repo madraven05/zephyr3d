@@ -11,10 +11,10 @@ const ParticleMeshExample = () => {
         <ambientLight intensity={0.5} />
         <directionalLight position={[5, 5, 5]} />
         <ParticleMesh
-          color="#f3ad4b"
-          scale={3}
+          color="#4bd4f3"
+          scale={1.5}
           props={{ position: [-2, 0, 0] }}
-          particlesCount={2000}
+          particlesCount={5_000}
           size={0.02}
           ModelComponent={WolfHP}
         />
