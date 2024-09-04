@@ -1,74 +1,58 @@
-import { RefObject } from "react";
-import {
-  BufferAttribute,
-  Points as ThreePoints,
-  BufferGeometry,
-  Group,
-  Mesh,
-  MeshStandardMaterial,
-  Object3DEventMap,
-  PointsMaterial,
-} from "three";
+import { BufferGeometry, Group, Matrix4, Mesh, Vector3 } from "three";
+import { MeshSurfaceSampler } from "three/examples/jsm/math/MeshSurfaceSampler";
 
-export const addPointsMesh = (
-  vertices: Float32Array,
-  groupRef: RefObject<Group<Object3DEventMap>>,
-  childMesh: Mesh,
-  size: number
-) => {
-  const pointMaterial = new PointsMaterial({
-    size: size,
-    vertexColors: false,
-    color: (childMesh.material as MeshStandardMaterial).color,
-    sizeAttenuation: true,
-    depthWrite: false,
-    
-  });
-  const buffGeom = new BufferGeometry();
-  buffGeom.setAttribute("position", new BufferAttribute(vertices, 3));
-  const pointsMesh = new ThreePoints(buffGeom, pointMaterial);
-  pointsMesh.position.copy(childMesh.position);
-  pointsMesh.rotation.copy(childMesh.rotation);
-  pointsMesh.scale.copy(childMesh.scale);
-  groupRef.current?.add(pointsMesh);
-};
-
-export const samplePointsFromVertices = (
-  vertices: Float32Array,
+export const samplePointsOnGeometry = (
+  mergedGeometry: BufferGeometry,
   particlesCount: number
 ) => {
-  // uniformly sample vertices
-  const sampledVertices: number[] = [];
-  var interval = Math.floor(vertices.length / 3 / particlesCount);
-  if (interval === 0) interval = 1;
+  const mesh = new Mesh(mergedGeometry);
+  const sampler = new MeshSurfaceSampler(mesh).setWeightAttribute(null).build();
 
-  for (let i = 0; i < vertices.length; i += interval * 3) {
-    if (i < vertices.length - 3) {
-      sampledVertices.push(vertices[i], vertices[i + 1], vertices[i + 2]);
-    }
+  const points = [];
+  const tempPosition = new Vector3();
+
+  for (let i = 0; i < particlesCount; i++) {
+    sampler.sample(tempPosition);
+    points.push(tempPosition.x, tempPosition.y, tempPosition.z);
   }
 
-  return new Float32Array(sampledVertices);
+  return new Float32Array(points);
 };
 
-export const convertToParticleMesh = (
+export const getAllMeshGeometries = (
   meshGroup: Group,
-  groupRef: RefObject<Group<Object3DEventMap>>,
-  particlesCount: number,
-  size: number,
-  metadata: { totalPoints: number; }
+
+  geometries: BufferGeometry[]
 ) => {
   meshGroup.children.forEach((child) => {
     if ((child as Group).isGroup) {
-      convertToParticleMesh(child as Group, groupRef, particlesCount, size, metadata);
+      getAllMeshGeometries(child as Group, geometries);
     } else if ((child as Mesh).isMesh) {
       const childMesh = child as Mesh;
-      const vertices = childMesh.geometry.getAttribute("position")
-        .array as Float32Array;
-
-      const newVertices = samplePointsFromVertices(vertices, particlesCount);
-      addPointsMesh(newVertices, groupRef, childMesh, size);
-      metadata.totalPoints += newVertices.length/3;
+      getNonIndexGeometry(childMesh, geometries);
     }
   });
+};
+
+export const getNonIndexGeometry = (
+  childMesh: Mesh,
+  geometries: BufferGeometry[]
+) => {
+  const geometry = childMesh.geometry
+    .clone()
+    .applyMatrix4(childMesh.matrixWorld);
+
+  // Convert to non-indexed geometry if indexed
+  const nonIndexedGeometry = geometry.index
+    ? geometry.toNonIndexed()
+    : geometry;
+
+  // Remove unwanted attributes
+  for (const key in nonIndexedGeometry.attributes) {
+    if (key !== "position") {
+      nonIndexedGeometry.deleteAttribute(key);
+    }
+  }
+  nonIndexedGeometry.applyMatrix4(new Matrix4().makeRotationFromEuler(childMesh.rotation));
+  geometries.push(nonIndexedGeometry);
 };
