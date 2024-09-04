@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { ParticleMesh, ParticleMeshProps } from "../particle-mesh";
 import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
-import { lerp } from "three/src/math/MathUtils";
 
 export interface MorphParticleMeshesProps {
   particlesCount: number;
@@ -20,12 +19,7 @@ export const MorphParticleMeshes: React.FC<MorphParticleMeshesProps> = ({
   const fromRef = useRef<THREE.Group>(null);
   const toRef = useRef<THREE.Group>(null);
 
-  const { gl, scene, camera } = useThree();
 
-  //   const [fromPositions, setFromPositions] = useState<Float32Array | null>(null);
-  //   const [targetPositions, setTargetPositions] = useState<Float32Array | null>(
-  //     null
-  //   );
   const [isMorphing, setIsMorphing] = useState(false);
 
   // update from and to props
@@ -120,10 +114,7 @@ export const MorphParticleMeshes: React.FC<MorphParticleMeshesProps> = ({
       if (pu.morphValue.value >= 1) {
         setIsMorphing(false);
       }
-      //   console.log(t);
       pu.morphValue.value = Math.sin(t * 0.08) + 0.0001;
-
-      //   console.log(pu.morphValue.value)
     }
   });
 
