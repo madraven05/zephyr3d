@@ -10,9 +10,6 @@ body {
   @apply text-white;
 }
 
-::-webkit-scrollbar {
-  display: none
-}
 
 h1,
 h2,
@@ -55,7 +52,9 @@ table {
   @apply rounded-t-lg;
   @apply bg-white/5;
   @apply backdrop-blur-lg;
-  @apply overflow-x-scroll;
+  @apply overflow-x-auto;
+  @apply block;
+
 
 }
 
