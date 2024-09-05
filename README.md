@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="./media/zephyr-icon.png" height=200/>
+    <img src="./media/zephyr-icon.png" height=100/>
 </div>
 <h1 align="center">Zephyr3D</h1>
 <br/>
