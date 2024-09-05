@@ -69,7 +69,7 @@ const Navbar = () => {
         as="div"
         open={mobileOpen}
         onClose={() => setMobileOpen(false)}
-        className="z-30 flex lg:hidden fixed right-0 top-10"
+        className="z-30 flex h-full lg:hidden fixed right-0 top-10"
       >
         <DialogPanel
           transition

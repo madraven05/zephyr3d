@@ -10,7 +10,7 @@ const SidebarLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="flex">
       <Sidebar />
-      <main className="lg:ml-72 px-10 py-8 flex-grow">{children}</main>
+      <main className="lg:ml-72 px-10 py-8 w-full">{children}</main>
     </div>
   );
 };
