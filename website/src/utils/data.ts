@@ -32,6 +32,10 @@ export const sidebarNavItems: SidebarNavItems = {
             },
           ],
         },
+        {
+          title: "Blob",
+          link: "/docs/components/blob",
+        },
       ],
     },
   ],
