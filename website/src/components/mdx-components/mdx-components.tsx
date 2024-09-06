@@ -13,6 +13,7 @@ import {
 import CodeBlock from "../code-block";
 import ParticleMeshExample from "./code-examples/particle-mesh-examples";
 import MorphParticleMeshesExamples from "./code-examples/morph-particle-mesh-examples";
+import BlobExample from "./code-examples/blob-examples";
 
 export const mdxComponents = {
   ProductCard,
@@ -25,5 +26,6 @@ export const mdxComponents = {
   CustomWaveFunction,
   ParticleMeshExample,
   MorphParticleMeshesExamples,
+  BlobExample,
   pre: ({ ...props }) => <CodeBlock {...props}></CodeBlock>,
 };

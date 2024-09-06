@@ -11,7 +11,7 @@ const ParticleMeshExample = () => {
         <ambientLight intensity={0.5} />
         <directionalLight position={[5, 5, 5]} />
         <ParticleMesh
-          color="#4bd4f3"
+          color="orange"
           scale={1.5}
           props={{ position: [-2, 0, 0] }}
           particlesCount={5_000}

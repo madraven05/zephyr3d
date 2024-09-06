@@ -12,7 +12,7 @@ const SidebarCollapsibleItems:React.FC<SidebarCollapsibleItemsProps> = ({title, 
   return (
     <Disclosure
       as="div"
-      className=""
+      className="mb-2"
       defaultOpen={false}
     >
       <DisclosureButton className="z-10 group rounded-lg flex w-full justify-between items-center">

@@ -22,8 +22,7 @@ export const SimpleParticleWave = () => {
         <directionalLight position={[0, 0, 10]} intensity={1.5} />
         <Suspense fallback={<Loader3D />}>
           <ParticlesWaveModel
-            startColor="#fff"
-            endColor="#111"
+            startColor="orange"
             particlesCount={5000}
           />
         </Suspense>
@@ -41,8 +40,7 @@ export const CircularParticleWave = () => {
         <directionalLight position={[0, 0, 10]} intensity={1.5} />
         <Suspense fallback={<Loader3D />}>
           <ParticlesWaveModel
-            startColor="#fff"
-            endColor="#111"
+            startColor="orange"
             particlesCount={5000}
             waveFunction={circularMotionXZ}
           />
@@ -79,8 +77,7 @@ export const CustomWaveFunction = () => {
         <pointLight position={[10, 10, 10]} intensity={2} />
         <directionalLight position={[0, 0, 10]} intensity={1.5} />
         <ParticlesWaveModel
-          startColor="#fff"
-          endColor="#111"
+          startColor="orange"
           particlesCount={10000}
           waveFunction={customWave}
         />
