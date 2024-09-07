@@ -12,20 +12,22 @@ export interface BlobProps {
   lightPosition?: THREE.Vector3;
   ambientIntensity?: number;
   speed?: number;
-  props?: JSX.IntrinsicElements['shaderMaterial'];
+  meshProps?: JSX.IntrinsicElements["mesh"];
+  shaderProps?: JSX.IntrinsicElements["shaderMaterial"];
 }
 
-export const Blob: React.FC<BlobProps> = forwardRef<THREE.Mesh, BlobProps>(
+export const Blob = forwardRef<THREE.Mesh, BlobProps>(
   (
     {
       noiseScale = 2.0,
       noiseIntensity = 0.5,
       color1 = "orange",
-      color2 = "pruple",
+      color2 = "purple",
       lightPosition = [2, 2, 2],
-      ambientIntensity = 0.4,
+      ambientIntensity = 0.7,
       speed = 1,
-      props
+      meshProps,
+      shaderProps,
     },
     ref
   ) => {
@@ -58,25 +60,25 @@ export const Blob: React.FC<BlobProps> = forwardRef<THREE.Mesh, BlobProps>(
           value: ambientIntensity,
         },
       };
-    }, [speed, color1, color2, noiseScale, noiseIntensity, ambientIntensity, lightPosition]);
+    }, []);
 
-    //#region animation
+    // #region animation
     useFrame(({ clock }) => {
       if (materialRef.current) {
         materialRef.current.uniforms.time.value = clock.getElapsedTime();
       }
     });
-    //#endregion
+    // #endregion
 
     return (
-      <mesh ref={ref}>
+      <mesh ref={ref} {...meshProps}>
         <sphereGeometry args={[2, 32, 32]} />
         <shaderMaterial
           ref={materialRef}
           uniforms={uniforms}
           vertexShader={vertexShader}
           fragmentShader={fragmentShader}
-          {...props}
+          {...shaderProps}
         />
       </mesh>
     );

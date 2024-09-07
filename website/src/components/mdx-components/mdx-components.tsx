@@ -13,7 +13,7 @@ import {
 import CodeBlock from "../code-block";
 import ParticleMeshExample from "./code-examples/particle-mesh-examples";
 import MorphParticleMeshesExamples from "./code-examples/morph-particle-mesh-examples";
-import BlobExample from "./code-examples/blob-examples";
+import {BlobColorsExample, BlobExample, MusicBlobExample} from "./code-examples/blob-examples";
 
 export const mdxComponents = {
   ProductCard,
@@ -27,5 +27,7 @@ export const mdxComponents = {
   ParticleMeshExample,
   MorphParticleMeshesExamples,
   BlobExample,
+  BlobColorsExample,
+  MusicBlobExample,
   pre: ({ ...props }) => <CodeBlock {...props}></CodeBlock>,
 };
