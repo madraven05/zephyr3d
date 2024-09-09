@@ -11,7 +11,7 @@ const Footer: React.FC<FooterProps> = () => {
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-center gap-2">
           <img className="h-10" src="/assets/zephyr-icon.png" />
-          <h1 className="text-4xl">Zephyr3D</h1>
+          <text className="font-heading uppercase font-semibold text-4xl">Zephyr3D</text>
         </div>
         <div className="flex flex-col gap-2">
           <p>Built by Pranshu Kumar Gond</p>
@@ -34,9 +34,9 @@ const Footer: React.FC<FooterProps> = () => {
       </div>
       {/* Right Panel */}
       <div className="mr-10 flex flex-col gap-2 items-start justify-start">
-        <p>Getting Started</p>
-        <p>Components</p>
-        <p>Templates</p>
+        <a className="hover:font-semibold transition duration-300 ease-in-out hover:-translate-y-0.5">Getting Started</a>
+        <a className="hover:font-semibold transition duration-300 ease-in-out hover:-translate-y-0.5">Components</a>
+        <a className="hover:font-semibold transition duration-300 ease-in-out hover:-translate-y-0.5">Templates</a>
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ package: "@zephyr3d/react"
 description: "A customisable animating wave goverened by mathematical expressions and some creativity!"
 ---
 
-## Imports
+<h2 id="imports">Imports</h2>
 
 ```javascript
 import {
@@ -17,9 +17,9 @@ import {
 } from "@zephyr3D/react";
 ```
 
-## Usage
+<h2 id="usage">Usage</h2>
 
-### Basic Usage
+<h3 id="basic-usage">Basic Usage</h3>
 
 Only the `startColor`, `endColor`, and the `particlesCount` props are used.
 
@@ -51,10 +51,11 @@ export const SimpleParticleWave = () => {
 };
 ```
 
-### Using the wave Function props
+<h3 id="wave-function-props">Using the wave Function props</h3>
 
 There are a bunch of tailor made wave functions that are available in Zephyr3D.
 One such is used here - `circularMotionXZ`. More functions can be found <a href="https://github.com/pranshukumargond/zephyr3d/blob/master/packages/react/src/utils/particles-wave-functions.ts" target="_blank">here</a>
+
 <CircularParticleWave />
 
 ```javascript
@@ -86,7 +87,7 @@ const CircularParticleWave = () => {
 export default CircularParticleWave;
 ```
 
-### Custom Wave Function
+<h3 id="custom-wave-function">Custom Wave Function</h3>
 
 Custom wave functions can be added as well. The function's arguments and return type should be consistent with the `waveFunction` prop's type (Mentioned in the props section).
 The custom wave function showcased in the example is a diamond sine wave.
@@ -110,98 +111,25 @@ export const CustomWaveFunction = () => {
     return [x, newY, z];
 };
 
-  return (
-    <div className="bg-white/10 rounded-md">
-      <ParticlesWave className="">
-          <ambientLight intensity={1} />
-          <pointLight position={[10, 10, 10]} intensity={2} />
-          <directionalLight position={[0, 0, 10]} intensity={1.5} />
-          <ParticlesWaveModel
+return (
+<div className="bg-white/10 rounded-md">
+<ParticlesWave className="">
+<ambientLight intensity={1} />
+<pointLight position={[10, 10, 10]} intensity={2} />
+<directionalLight position={[0, 0, 10]} intensity={1.5} />
+<ParticlesWaveModel
           startColor="#fff"
           endColor="#111"
           particlesCount={10000}
           waveFunction={customWave}
           />
-      </ParticlesWave>
-    </div>
-  ); 
+</ParticlesWave>
+</div>
+);
 };
+
 ```
 
-## Props
+<h2 id="props">Props</h2>
 
-<table>
-  <thead>
-    <tr>
-      <th>Prop</th>
-      <th>Description</th>
-      <th>Type</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`particlesCount`</td>
-      <td>Number of particles in the wave</td>
-      <td>`number`</td>
-      <td>500</td>
-    </tr>
-    <tr>
-      <td>`xLength`</td>
-      <td>Length of the wave in the X direction</td>
-      <td>`number`</td>
-      <td>14</td>
-    </tr>
-    <tr>
-      <td>`yLength`</td>
-      <td>Length of the wave in the Y direction</td>
-      <td>`number`</td>
-      <td>14</td>
-    </tr>
-    <tr>
-      <td>`zLength`</td>
-      <td>Length of the wave in the Z direction</td>
-      <td>`number`</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <td>`duration`</td>
-      <td>In milliseconds - governs the speed of the wave </td>
-      <td>`number`</td>
-      <td>1000</td>
-    </tr>
-    <tr>
-      <td>`startColor`</td>
-      <td>The start color in the `lerp` function while calculating the color of each particle</td>
-      <td>`string`</td>
-      <td>"#7439e2"</td>
-    </tr>
-    <tr>
-      <td>`endColor`</td>
-      <td>The end color in the `lerp` function while calculating the color of each particle</td>
-      <td>`string`</td>
-      <td>"#ce9082"</td>
-    </tr>
-    <tr>
-      <td>`geometry`</td>
-      <td>Geometry defines the shape of the particle</td>
-      <td>`BufferGeometry`</td>
-      <td>`new SphereGeometry(0.02, 4, 4)`</td>
-    </tr>
-    <tr>
-      <td>`material`</td>
-      <td>Material of the particle in the wave</td>
-      <td>`Material`</td>
-      <td>`new MeshStandardMaterial({ color: startColor })`</td>
-    </tr>
-    <tr>
-      <td>`waveFunction`</td>
-      <td>Mathematical expression governing the shape of the wave</td>
-      <td>`(
-    particle: number[],
-    duration: number
-  ) => [number, number, number]`</td>
-      <td>`sineWaveXZ`</td>
-    </tr>
-  </tbody>
-</table>
+<PropsTable component="particle-wave"/>
