@@ -32,7 +32,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
                 className="h-10 backdrop-blur-md rounded-full shadow-lg"
                 src="/assets/zephyr-icon.png"
               ></img>
-              <h1 className="hidden lg:inline">Zephyr3D</h1>
+              <p className="hidden font-heading uppercase text-4xl font-semibold lg:inline">Zephyr3D</p>
             </Link>
           </div>
           <Navbar />
