@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import fs from "fs";
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { MDXProvider } from "@mdx-js/react";
@@ -10,6 +10,7 @@ import Prism from "prismjs";
 import { mdxComponents } from "@/components/mdx-components/mdx-components";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import FloatingTOC, { TOCItem } from "@/components/floating-toc";
 
 interface ComponentDocProps {
   source: MDXRemoteSerializeResult;
@@ -23,15 +24,24 @@ interface ComponentDocProps {
 }
 
 const ComponentDoc = ({ source, frontMatter }: ComponentDocProps) => {
+  const [tocItems, setTocItems] = useState<TOCItem[]>([]);
+
   useEffect(() => {
     Prism.highlightAll();
+    const headings = document.querySelectorAll("h1, h2, h3");
+    const items: TOCItem[] = Array.from(headings).map((heading) => ({
+      id: heading.id,
+      text: heading.textContent || "",
+      level: parseInt(heading.tagName.substring(1), 10),
+    }));
+    setTocItems(items);
   }, [source]);
 
   const router = useRouter();
   const { slug } = router.query;
 
   return (
-    <>
+    <div className="">
       <Head>
         <title>{`Zephyr3D - ${frontMatter.title}`}</title>
       </Head>
@@ -42,8 +52,9 @@ const ComponentDoc = ({ source, frontMatter }: ComponentDocProps) => {
         <MDXProvider components={mdxComponents}>
           <MDXRemote {...source} />
         </MDXProvider>
+        {tocItems.length > 0 ? <FloatingTOC items={tocItems} /> : null}
       </div>
-    </>
+    </div>
   );
 };
 

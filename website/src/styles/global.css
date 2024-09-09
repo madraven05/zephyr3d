@@ -4,12 +4,15 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   @apply bg-slate-400;
   @apply dark:bg-slate-800;
   @apply text-white;
 }
-
 
 h1,
 h2,
@@ -17,6 +20,7 @@ h3 {
   @apply font-heading;
   @apply font-bold;
   @apply uppercase;
+  scroll-margin-top: 80px;
   /* @apply text-white; */
 }
 h1 {
@@ -53,9 +57,7 @@ table {
   @apply bg-white/5;
   @apply backdrop-blur-lg;
   @apply overflow-x-auto;
-  @apply block;
-
-
+  @apply lg:inline-table block;
 }
 
 table code {
