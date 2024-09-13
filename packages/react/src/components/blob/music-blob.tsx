@@ -1,9 +1,8 @@
 import React, { forwardRef, useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
-import FFT from "fft.js";
 import { Html } from "@react-three/drei";
 import { getLoudness } from "../../utils/music-blob-utils";
-import { Blob, BlobProps } from "./blob";
+import { BlobProps } from "./blob";
 import { useFrame } from "@react-three/fiber";
 import { fragmentShader, vertexShader } from "./shaders";
 
@@ -27,7 +26,9 @@ export const MusicBlob = forwardRef<THREE.Mesh, MusicBlobProps>(
     const [sampleRate, setSampleRate] = useState(0);
 
     const materialRef = useRef<THREE.ShaderMaterial>(null);
-    
+
+    const audioContext = useRef<AudioContext | null>(null);
+    const source = useRef<MediaElementAudioSourceNode | null>(null);
     const analyserRef = useRef<AnalyserNode | null>(null);
     const dataArrayRef = useRef<Uint8Array | null>(null);
 
@@ -60,29 +61,30 @@ export const MusicBlob = forwardRef<THREE.Mesh, MusicBlobProps>(
       };
     }, []);
 
-    useEffect(() => {
-      const handlePlay = () => {
-        const audioContext = new window.AudioContext();
-        const analyser = audioContext.createAnalyser();
+    const handlePlay = () => {
+      audioContext.current = new window.AudioContext();
 
-        const source = audioContext.createMediaElementSource(audioRef.current!);
-        source.connect(analyser);
-        analyser.connect(audioContext.destination);
-        setSampleRate(audioContext.sampleRate);
+      if (!source.current) {
+        const analyser = audioContext.current.createAnalyser();
+        source.current = audioContext.current.createMediaElementSource(
+          audioRef.current!
+        );
+        source.current.connect(analyser);
+        analyser.connect(audioContext.current.destination);
+        setSampleRate(audioContext.current.sampleRate);
         analyser.fftSize = 1024; // Adjust for more or fewer samples
         const bufferLength = analyser.frequencyBinCount;
         const dataArray = new Uint8Array(bufferLength);
 
         analyserRef.current = analyser;
         dataArrayRef.current = dataArray;
-      };
+      }
+    };
 
+    useEffect(() => {
       setTimeout(() => {
         if (audioRef.current) {
           audioRef.current.addEventListener("play", handlePlay);
-          audioRef.current.onpause = () => {
-            
-          }
         }
       }, 2000);
 
@@ -90,6 +92,7 @@ export const MusicBlob = forwardRef<THREE.Mesh, MusicBlobProps>(
         if (audioRef.current) {
           audioRef.current.removeEventListener("play", handlePlay);
         }
+        audioContext.current?.close();
       };
     }, []);
 
@@ -105,7 +108,9 @@ export const MusicBlob = forwardRef<THREE.Mesh, MusicBlobProps>(
           sampleRate
         ).overallLoudness;
 
-        material.uniforms.noiseIntensity.value = loudness * 4 - 2 + 0.001;
+        loudness > 0
+          ? (material.uniforms.noiseIntensity.value = loudness * 4 - 2 + 0.001)
+          : (material.uniforms.noiseIntensity.value = 0);
       }
     });
 
