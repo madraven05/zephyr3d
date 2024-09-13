@@ -9,7 +9,7 @@ import React from "react";
 
 const ComponentsPage = () => {
   return (
-    <div>
+    <div className="min-h-screen">
       <ProductCard>
         <ProductCardCanvas className="rounded-t-lg backdrop-blur-sm bg-gradient-to-tl from-gray-50/50 to-white/10">
           <NikeAirJordan

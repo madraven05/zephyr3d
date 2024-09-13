@@ -27,15 +27,15 @@ const ComponentDoc = ({ source, frontMatter }: ComponentDocProps) => {
   const [tocItems, setTocItems] = useState<TOCItem[]>([]);
 
   useEffect(() => {
-    Prism.highlightAll();
     const headings = document.querySelectorAll("h1, h2, h3");
     const items: TOCItem[] = Array.from(headings).map((heading) => ({
       id: heading.id,
       text: heading.textContent || "",
       level: parseInt(heading.tagName.substring(1), 10),
     }));
+
     setTocItems(items);
-  }, [source]);
+  }, []);
 
   const router = useRouter();
   const { slug } = router.query;

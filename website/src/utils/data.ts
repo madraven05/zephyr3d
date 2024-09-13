@@ -35,7 +35,17 @@ export const sidebarNavItems: SidebarNavItems = {
         },
         {
           title: "Blob",
-          link: "/docs/components/blob",
+          link: "",
+          childItems: [
+            {
+              title: "Standard Blob",
+              link: "/docs/components/blob",
+            },
+            {
+              title: "Music Blob",
+              link: "/docs/components/music-blob",
+            },
+          ],
         },
       ],
     },

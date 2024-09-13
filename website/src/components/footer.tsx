@@ -6,7 +6,7 @@ interface FooterProps {}
 
 const Footer: React.FC<FooterProps> = () => {
   return (
-    <div className="flex flex-wrap gap-10 relative items-center justify-between  shadow-lg w-full p-16 backdrop-blur-lg bg-slate-500/10">
+    <div className="flex flex-wrap gap-10 relative items-center justify-between  shadow-lg w-full p-16 backdrop-blur-2xl bg-slate-200/10">
       {/* Left Panel */}
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-center gap-2">

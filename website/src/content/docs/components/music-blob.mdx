@@ -1,0 +1,36 @@
+---
+id: "music-blob"
+title: "Music Blob"
+category: "visual-display"
+package: "@zephyr3d/react"
+description: "3D blob created and animated using perlin noise. It dances to the beats of the music you provide!"
+---
+
+## Imports
+```javascript
+import { MusicBlob } from "@zephyr3D/react";
+```
+
+## Usage
+You would require to pass the **mutable ref object** from the audio element as a prop to this component as shown in the example.
+<MusicBlobExample/>
+
+```javascript
+import { MusicBlob } from "@zephyr3D/react";
+
+export const MusicBlobExample = () => {
+  const audioRef = useRef<HTMLAudioElement>(null);
+  return (
+    <div className="flex flex-col justify-center items-center p-4 bg-white/10 h-96 rounded-md shadow-md">
+      <Canvas>
+        <MusicBlob audioRef={audioRef} />
+      </Canvas>
+      <audio controls ref={audioRef}>
+        <source src={"/assets/summer-party.mp3"} type="audio/mpeg" />
+      </audio>
+    </div>
+  );
+};
+```
+
+## Props

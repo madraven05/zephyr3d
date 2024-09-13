@@ -2,6 +2,7 @@ import React, {
   DetailedHTMLProps,
   DetailsHTMLAttributes,
   HTMLAttributes,
+  useEffect,
 } from "react";
 
 import {
@@ -9,11 +10,16 @@ import {
   DisclosurePanel,
   DisclosureButton,
 } from "@headlessui/react";
+import Prism from "prismjs";
 import { FaAngleDown, FaCode } from "react-icons/fa6";
 
 type CodeBlockProps = HTMLAttributes<HTMLElement>;
 
 const CodeBlock: React.FC<CodeBlockProps> = ({ children }) => {
+
+  useEffect(() => {
+    Prism.highlightAll();
+  }, [])
 
   return (
     <Disclosure
