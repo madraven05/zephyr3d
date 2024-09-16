@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "website/package.json",
+        "use": "@vercel/next"
+      },
+      {
+        "src": "packages/react/package.json",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      { "src": "/", "dest": "website" }
+    ]
+  }
