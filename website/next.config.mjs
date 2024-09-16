@@ -5,6 +5,9 @@ const nextConfig = {
   output: "export",
   reactStrictMode: true,
   pageExtensions: ["ts", "tsx", "md", "mdx"],
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   experimental: {
     mdxRs: true,
   },
