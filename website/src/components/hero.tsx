@@ -5,8 +5,8 @@ import {
 } from "@zephyr3D/react";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { MeshPhongMaterial } from "three";
-import React, { useContext, useState } from "react";
-import { ZephyrContext, ZephyrProvider } from "./zephyr-context";
+import React, { useContext } from "react";
+import { ZephyrContext } from "./zephyr-context";
 
 const Hero = () => {
   const material = new MeshPhongMaterial({ vertexColors: false });

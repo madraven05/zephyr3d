@@ -1,9 +1,8 @@
-import { GetStaticProps } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { HTMLAttributes, useState } from "react";
+import React, { useState } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
-import { MdArrowBackIos, MdArrowForwardIos, MdClose } from "react-icons/md";
+import { MdArrowForwardIos, MdClose } from "react-icons/md";
 import { sidebarNavItems } from "@/utils/data";
 import SidebarCollapsibleItems from "./sidebar-collapsible-items";
 

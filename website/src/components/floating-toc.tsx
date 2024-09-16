@@ -1,5 +1,5 @@
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { MdOutlineManageSearch } from "react-icons/md";
 
 export interface TOCItem {
