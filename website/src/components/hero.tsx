@@ -2,7 +2,6 @@ import {
   ParticlesWave,
   ParticlesWaveModel,
   circularMotionXZ,
-  sineWaveXZ,
 } from "@zephyr3D/react";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { MeshPhongMaterial } from "three";
