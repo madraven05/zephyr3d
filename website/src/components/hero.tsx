@@ -12,16 +12,7 @@ const Hero = () => {
   const material = new MeshPhongMaterial({ vertexColors: false });
 
   const zephyrContext = useContext(ZephyrContext);
-
-  const customWaveFunction = (
-    x: number,
-    y: number,
-    z: number,
-    time: number
-  ): [number, number, number] => {
-    return [x, y, z];
-  };
-
+  
   return (
     <section className="flex w-full flex-grow flex-col justify-center items-center">
       <ParticlesWave className=" w-full h-screen">
