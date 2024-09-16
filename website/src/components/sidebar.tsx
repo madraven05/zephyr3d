@@ -99,7 +99,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
             onClick={() => setOpenMobileSidebar(false)}
             className="fixed top-4 right-4"
           >
-            <MdClose className="text-2xl text-white/80" />
+            <MdClose className="text-2xl " />
           </button>
           <ul className="flex flex-col gap-3">
             {sidebarNavItems[pageName as string].map((item) => (

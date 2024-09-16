@@ -52,10 +52,13 @@ const Hero = () => {
       </ParticlesWave>
       <div className="absolute p-10 gap-4 text-center flex flex-col justify-center items-center">
         <h1 className="font-extrabold text-5xl">Zephyr3D</h1>
-        <p className="">
+        <div>
+        <p className="font-semibold">
           A 3D component library made using React Three Fiber, Tailwind and
           React Spring
         </p>
+        <p className="text-sm">Best experienced in Dark mode!</p>
+        </div>
       </div>
     </section>
   );

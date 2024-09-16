@@ -1,8 +1,8 @@
 import {
-  ProductCard,
-  ProductCardTitle,
-  ProductCardPanel,
-  ProductCardCanvas,
+  Card,
+  CardTitle,
+  CardPanel,
+  CardCanvas,
 } from "@zephyr3D/react";
 import { NikeAirJordan } from "@/components/NikeAirJordan";
 import {
@@ -15,12 +15,10 @@ import ParticleMeshExample from "./code-examples/particle-mesh-examples";
 import MorphParticleMeshesExamples from "./code-examples/morph-particle-mesh-examples";
 import {BlobColorsExample, BlobExample, MusicBlobExample} from "./code-examples/blob-examples";
 import PropsTable from "../props-table";
+import { CardExample } from "./code-examples/card-examples";
 
 export const mdxComponents = {
-  ProductCard,
-  ProductCardTitle,
-  ProductCardPanel,
-  ProductCardCanvas,
+  CardExample,
   NikeAirJordan,
   SimpleParticleWave,
   CircularParticleWave,

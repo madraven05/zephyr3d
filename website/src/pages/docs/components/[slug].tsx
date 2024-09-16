@@ -6,10 +6,8 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import matter from "gray-matter";
 import path from "path";
 import { serialize } from "next-mdx-remote/serialize";
-import Prism from "prismjs";
 import { mdxComponents } from "@/components/mdx-components/mdx-components";
 import Head from "next/head";
-import { useRouter } from "next/router";
 import FloatingTOC, { TOCItem } from "@/components/floating-toc";
 
 interface ComponentDocProps {
@@ -35,17 +33,14 @@ const ComponentDoc = ({ source, frontMatter }: ComponentDocProps) => {
     }));
 
     setTocItems(items);
-  }, []);
-
-  const router = useRouter();
-  const { slug } = router.query;
+  }, [source]);
 
   return (
     <div className="">
       <Head>
         <title>{`Zephyr3D - ${frontMatter.title}`}</title>
       </Head>
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 min-h-screen">
         <h1>{frontMatter.title}</h1>
         <p>{frontMatter.description}</p>
 
