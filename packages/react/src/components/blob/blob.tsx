@@ -1,7 +1,6 @@
 import React, { forwardRef, useMemo, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
-import { createNoise2D } from "simplex-noise";
 import { fragmentShader, vertexShader } from "./shaders";
 
 export interface BlobProps {

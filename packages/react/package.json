@@ -16,7 +16,6 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "@types/d3-geo": "^3.1.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.105",
     "@types/react": "^18.3.4",
@@ -53,8 +52,6 @@
     ]
   },
   "devDependencies": {
-    "@types/geojson": "^7946.0.14",
-    "@types/noisejs": "^0.0.31",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.41",
     "tailwindcss": "^3.4.10"
