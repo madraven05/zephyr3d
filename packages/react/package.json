@@ -28,7 +28,7 @@
     "typescript": "^4.9.5"
   },
   "scripts": {
-    "build": "tsc --build && npm run add-assets",
+    "build": "tsc --build",
     "add-assets": "cp -r src/assets dist/",
     "watch": "tsc --build --watch",
     "clean": "rm -rf dist"
