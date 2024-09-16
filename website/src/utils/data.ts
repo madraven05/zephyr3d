@@ -1,5 +1,4 @@
 import { SidebarNavItems } from "@/components/sidebar";
-import { ReactNode } from "react";
 
 export const sidebarNavItems: SidebarNavItems = {
   components: [
@@ -7,13 +6,13 @@ export const sidebarNavItems: SidebarNavItems = {
       category: "Data Display",
       navItems: [
         {
-          title: "Product Card",
-          link: "/docs/components/product-card",
+          title: "Card",
+          link: "/docs/components/card",
         },
       ],
     },
     {
-      category: "Visual Components",
+      category: "Particle Systems",
       navItems: [
         {
           title: "Particle Wave",
@@ -33,22 +32,21 @@ export const sidebarNavItems: SidebarNavItems = {
             },
           ],
         },
-        {
-          title: "Blob",
-          link: "",
-          childItems: [
-            {
-              title: "Standard Blob",
-              link: "/docs/components/blob",
-            },
-            {
-              title: "Music Blob",
-              link: "/docs/components/music-blob",
-            },
-          ],
-        },
       ],
     },
+    {
+      category: "Blobs",
+      navItems: [
+        {
+          title: "Standard Blob",
+          link: "/docs/components/blob",
+        },
+        {
+          title: "Music Blob",
+          link: "/docs/components/music-blob",
+        },
+      ]
+    }
   ],
   dev: [
     {

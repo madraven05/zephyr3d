@@ -1,7 +1,7 @@
 ---
 id: "particles-wave"
 title: "Particles Wave"
-category: "visual-display"
+category: "particle-systems"
 package: "@zephyr3d/react"
 description: "A customisable animating wave goverened by mathematical expressions and some creativity!"
 ---
@@ -112,21 +112,21 @@ export const CustomWaveFunction = () => {
 };
 
 return (
+
 <div className="bg-white/10 rounded-md">
-<ParticlesWave className="">
-<ambientLight intensity={1} />
-<pointLight position={[10, 10, 10]} intensity={2} />
-<directionalLight position={[0, 0, 10]} intensity={1.5} />
-<ParticlesWaveModel
-          startColor="#fff"
-          endColor="#111"
-          particlesCount={10000}
-          waveFunction={customWave}
-          />
-</ParticlesWave>
+  <ParticlesWave className="">
+    <ambientLight intensity={1} />
+    <pointLight position={[10, 10, 10]} intensity={2} />
+    <directionalLight position={[0, 0, 10]} intensity={1.5} />
+    <ParticlesWaveModel
+      startColor="#fff"
+      endColor="#111"
+      particlesCount={10000}
+      waveFunction={customWave}
+    />
+  </ParticlesWave>
 </div>
-);
-};
+); };
 
 ```
 

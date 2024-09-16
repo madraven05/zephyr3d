@@ -5,6 +5,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 
 export interface MorphParticleMeshesProps {
   particlesCount: number;
+  color?: string;
   fromProps: ParticleMeshProps;
   toProps: ParticleMeshProps;
   timeout?: number;
@@ -12,6 +13,7 @@ export interface MorphParticleMeshesProps {
 
 export const MorphParticleMeshes: React.FC<MorphParticleMeshesProps> = ({
   particlesCount = 1000,
+  color = "yellow",
   fromProps,
   toProps,
   timeout = 2000,
@@ -26,13 +28,13 @@ export const MorphParticleMeshes: React.FC<MorphParticleMeshesProps> = ({
   toProps = {
     ...toProps,
     particlesCount: particlesCount,
-    color: "yellow",
+    color: color,
     props: { ...toProps.props, visible: false },
   };
 
   fromProps = {
     ...fromProps,
-    color: "yellow",
+    color: color,
     particlesCount: particlesCount,
   };
 
