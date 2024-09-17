@@ -12,7 +12,7 @@ const Hero = () => {
   const material = new MeshPhongMaterial({ vertexColors: false });
 
   const zephyrContext = useContext(ZephyrContext);
-  
+
   return (
     <section className="flex w-full flex-grow flex-col justify-center items-center">
       <ParticlesWave className=" w-full h-screen">
@@ -47,7 +47,8 @@ const Hero = () => {
           A 3D component library made using React Three Fiber, Tailwind and
           React Spring
         </p>
-        <p className="text-sm">Best experienced in Dark mode!</p>
+        <p className="text-base">Best experienced in Dark mode!</p>
+        <p className="text-sm">(This is a demo preview version of the website)</p>
         </div>
       </div>
     </section>
