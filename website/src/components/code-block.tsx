@@ -21,7 +21,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ children }) => {
     <Disclosure
       as="div"
       className="p-5 bg-slate-50/5 backdrop-blur-sm  overflow-auto shadow-md w-full rounded-xl"
-      defaultOpen={true}
+      defaultOpen={false}
     >
       {({ open }) => {
         setIsOpen(open);
@@ -40,7 +40,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ children }) => {
             >
               <div className="absolute flex inset-0 justify-center items-center bg-black/10 backdrop-blur-lg rounded-lg z-30">
                 <div>
-                  <h3>Coming soon!</h3>
+                  <p className="text-xl lg:text-2xl font-heading uppercase">Coming soon!</p>
                 </div>
               </div>
               <pre className="relative">{children}</pre>
